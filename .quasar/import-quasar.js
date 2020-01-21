@@ -10,14 +10,14 @@
  * Boot files are your "main.js"
  **/
 
-import lang from 'quasar/lang/en-us'
+import lang from 'quasar/lang/ru'
 
 import iconSet from 'quasar/icon-set/material-icons'
 
 
 import Vue from 'vue'
 
-import {Quasar,QLayout,QHeader,QDrawer,QPageContainer,QPage,QToolbar,QToolbarTitle,QBtn,QIcon,QList,QItem,QItemSection,QItemLabel,QForm,QInput,QCard,QCardSection,QCardActions,Ripple,Cookies,Notify} from 'quasar'
+import {Quasar,QLayout,QHeader,QDrawer,QPageContainer,QPage,QToolbar,QToolbarTitle,QBtn,QIcon,QList,QItem,QItemSection,QItemLabel,QForm,QInput,QCard,QCardSection,QCardActions,QDate,Ripple,Notify} from 'quasar'
 
 
-Vue.use(Quasar, { config: {"notify":{}},lang: lang,iconSet: iconSet,components: {QLayout,QHeader,QDrawer,QPageContainer,QPage,QToolbar,QToolbarTitle,QBtn,QIcon,QList,QItem,QItemSection,QItemLabel,QForm,QInput,QCard,QCardSection,QCardActions},directives: {Ripple},plugins: {Cookies,Notify} })
+Vue.use(Quasar, { config: {"notify":{}},lang: lang,iconSet: iconSet,components: {QLayout,QHeader,QDrawer,QPageContainer,QPage,QToolbar,QToolbarTitle,QBtn,QIcon,QList,QItem,QItemSection,QItemLabel,QForm,QInput,QCard,QCardSection,QCardActions,QDate},directives: {Ripple},plugins: {Notify} })

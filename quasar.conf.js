@@ -32,7 +32,7 @@ module.exports = function (ctx) {
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       iconSet: 'material-icons', // Quasar icon set
-      lang: 'en-us', // Quasar language pack
+      lang: 'ru', // Quasar language pack
 
       // Possible values for "all":
       // * 'auto' - Auto-import needed Quasar components & directives
@@ -61,7 +61,8 @@ module.exports = function (ctx) {
         'QInput',
         'QCard',
         'QCardSection',
-        'QCardActions'
+        'QCardActions',
+        'QDate'
       ],
 
       directives: [
@@ -70,7 +71,6 @@ module.exports = function (ctx) {
 
       // Quasar plugins
       plugins: [
-        'Cookies',
         'Notify'
       ],
 
@@ -199,8 +199,17 @@ module.exports = function (ctx) {
 
         appId: 'ru.eaglorn.khtc',
         win: {
-          target: 'portable'
+          target: [
+            {
+              target: "nsis",
+              arch: [
+                "x64",
+                "ia32"
+              ]
+            }
+          ]
         }
+
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration

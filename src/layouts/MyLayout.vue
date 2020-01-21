@@ -4,9 +4,7 @@
       <q-toolbar>
         <q-btn flat dense round @click='leftDrawerOpen = !leftDrawerOpen' icon='menu' aria-label='Menu' v-if='auth' />
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
+        <q-toolbar-title> КГБ ПОУ ХТК </q-toolbar-title>
 
         <q-btn color='secondary' label='Войти' to="/login" v-if='!auth' />
         <q-btn color='red' label='Выйти' to="/login" v-if='auth' v-on:click="exit()"/>
@@ -16,15 +14,16 @@
     <q-drawer v-model='leftDrawerOpen' show-if-above bordered content-class='bg-grey-2' v-if='auth'>
       <q-list>
         <q-item-label header>Header</q-item-label>
-        <q-item clickable tag='a' target='_blank' href='https://quasar.dev'>
+        <q-item clickable v-on:click='setting()'>
           <q-item-section avatar>
-            <q-icon name='school' />
+            <q-icon name='build' />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Docs</q-item-label>
-            <q-item-label caption>quasar.dev</q-item-label>
+            <q-item-label>Настройки</q-item-label>
+            <q-item-label caption></q-item-label>
           </q-item-section>
         </q-item>
+        <!--
         <q-item clickable tag='a' target='_blank' href='https://github.quasar.dev'>
           <q-item-section avatar>
             <q-icon name='code' />
@@ -70,6 +69,7 @@
             <q-item-label caption>@QuasarFramework</q-item-label>
           </q-item-section>
         </q-item>
+        -->
       </q-list>
     </q-drawer>
 
@@ -80,8 +80,6 @@
 </template>
 
 <script>
-import { Cookies } from 'quasar'
-
 export default {
   name: 'MyLayout',
 
@@ -92,59 +90,21 @@ export default {
   },
   methods: {
     exit () {
-      this.$store.dispatch('user/updateAuth', false)
-      this.$store.dispatch('user/updateLogin', '')
-      this.$store.dispatch('user/updatePassword', '')
-      Cookies.remove('auth')
-      Cookies.remove('login')
-      Cookies.remove('password')
-      if (this.$route.path !== '/index') this.$router.push('/index')
+      this.$store.dispatch('user/exit')
+      if (this.$route.path !== '/login') this.$router.push('/login')
     },
-    onLoad () {
-      if (Cookies.get('auth') === true) {
-        this.$axios({
-          method: 'post',
-          url: 'http://46.8.146.12:4300/api/authorization',
-          data: { login: Cookies.get('login'), password: Cookies.get('password') },
-          timeout: 5000,
-          responseType: 'json'
-        })
-          .then((response) => {
-            if (response.datalogin === false) {
-              this.$q.notify({ color: 'negative', position: 'top', message: 'Пользователя с таким логином нет', icon: 'report_problem' })
-            } else {
-              if (response.data.password === false) {
-                this.$q.notify({ color: 'negative', position: 'top', message: 'Не верный пароль', icon: 'report_problem' })
-              } else {
-                this.$q.notify({ color: 'teal', position: 'top', message: '<i class="fad fa-check-circle"></i> Успешно', html: true })
-                this.$store.dispatch('user/updateAuth', true)
-                this.$store.dispatch('user/updateLogin', Cookies.get('login'))
-                this.$store.dispatch('user/updatePassword', Cookies.get('password'))
-                Cookies.set('auth', this.$store.getters['user/auth'], { expires: 1 })
-                Cookies.set('login', this.$store.getters['user/login'], { expires: 1 })
-                Cookies.set('password', this.$store.getters['user/password'], { expires: 1 })
-                if (this.$route.path !== '/index') this.$router.push('/index')
-              }
-            }
-          })
-          .catch(() => {
-            this.$q.notify({ color: 'negative', position: 'top', message: 'Ошибка отправки', icon: 'report_problem' })
-          })
-      } else {
-        if (this.$route.path !== '/login') this.$router.push('/login')
-      }
+    setting () {
+      this.$store.dispatch('setting/getDate', { app: this })
+      if (this.$route.path !== '/setting') this.$router.push('/setting')
     }
-  },
-  created () {
-    this.onLoad()
   },
   computed: {
     auth: {
       get () {
         return this.$store.getters['user/auth']
       },
-      set (val) {
-        this.$store.dispatch('user/updateAuth', val)
+      set (value) {
+        this.$store.dispatch('user/updateAuth', value)
       }
     }
   }

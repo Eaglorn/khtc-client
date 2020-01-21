@@ -918,7 +918,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__(/*! c:\\Users\\Администратор\\Desktop\\khtc\\khtc\\src-electron\\main-process\\electron-main.dev.js */\"./src-electron/main-process/electron-main.dev.js\");\n\n\n//# sourceURL=webpack:///multi_./src-electron/main-process/electron-main.dev.js?");
+eval("module.exports = __webpack_require__(/*! C:\\khtc\\khtc-client\\src-electron\\main-process\\electron-main.dev.js */\"./src-electron/main-process/electron-main.dev.js\");\n\n\n//# sourceURL=webpack:///multi_./src-electron/main-process/electron-main.dev.js?");
 
 /***/ }),
 
