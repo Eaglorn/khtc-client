@@ -45,5 +45,23 @@ export function getRateStandart (context, value) {
       context.commit('standartHotWaterEnergy', response.data.HotWaterEnergy[0])
       context.commit('rateHotWaterEnergy', response.data.HotWaterEnergy[1])
 
+      context.commit('standartWaterOut', response.data.WaterOut[0])
+      context.commit('rateWaterOut', response.data.WaterOut[1])
+
+      context.commit('standartWaterIn', response.data.WaterIn[0])
+      context.commit('rateWaterIn', response.data.WaterIn[1])
+
+      context.commit('standartHotWaterHot', response.data.HotWaterHot[0])
+      context.commit('rateHotWaterHot', response.data.HotWaterHot[1])
+
+      context.commit('standartHotWaterEnergy', response.data.HotWaterEnergy[0])
+      context.commit('rateHotWaterEnergy', response.data.HotWaterEnergy[1])
+
+      context.commit('rateElectricity', response.data.Electricity)
+
+      context.commit('standartTrash', response.data.Trash[0])
+      context.commit('rateTrash', response.data.Trash[1])
+
+      context.commit('rateServices', response.data.Services)
     })
 }
