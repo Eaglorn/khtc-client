@@ -7,9 +7,9 @@
         </q-card-section>
         <q-card-section class="q-gutter-md">
           <q-form @submit="onSubmit" class="q-gutter-md">
-            <q-date v-model="date" today-btn/>
+            <q-date v-model="date" today-btn />
             <div class="row justify-center">
-              <q-btn label="Сохранить" type="submit" color="green"/>
+              <q-btn label="Сохранить" type="submit" color="green" />
             </div>
           </q-form>
         </q-card-section>
@@ -20,36 +20,41 @@
 
 <script>
 export default {
-  data () {
-    return { }
+  data() {
+    return {};
   },
 
   methods: {
-    onSubmit () {
+    onSubmit() {
       this.$axios({
-        method: 'post',
-        url: 'http://46.8.146.12:4300/api/set/date',
+        method: "post",
+        url: "http://46.8.146.12:4300/api/set/date",
         data: { date: this.date },
         timeout: 5000,
-        responseType: 'json'
+        responseType: "json"
       })
-        .then((response) => {
-          this.$store.dispatch('setting/updateDate', this.date)
+        .then(response => {
+          this.$store.dispatch("setting/updateDate", this.date);
         })
         .catch(() => {
-          this.$q.notify({ color: 'negative', position: 'top', message: 'Ошибка сохранения', icon: 'report_problem' })
-        })
+          this.$q.notify({
+            color: "negative",
+            position: "top",
+            message: "Ошибка сохранения",
+            icon: "report_problem"
+          });
+        });
     }
   },
   computed: {
     date: {
-      get () {
-        return this.$store.getters['setting/date']
+      get() {
+        return this.$store.getters["setting/date"];
       },
-      set (value) {
-        this.$store.dispatch('setting/updateDate', value)
+      set(value) {
+        this.$store.dispatch("setting/updateDate", value);
       }
     }
   }
-}
+};
 </script>

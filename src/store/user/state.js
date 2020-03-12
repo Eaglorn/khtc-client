@@ -1,7 +1,7 @@
-export default function () {
+export default function() {
   return {
     auth: false,
-    login: '',
-    password: ''
-  }
+    login: "",
+    password: ""
+  };
 }

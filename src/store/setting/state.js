@@ -1,7 +1,7 @@
-export default function () {
+export default function() {
   return {
     // rate - тариф, standart - норматив
-    date: '',
+    date: "",
     room: 0.0, // Содержание помещений
     hot_energy: [0.0, 0.0], // Тепловая энергия
     water_out: [0.0, 0.0], // Водоотведение
@@ -11,5 +11,5 @@ export default function () {
     electricity: 0.0, // Электроэнергия
     trash: [0.0, 0.0], // Вывоз мусора
     services: 0.0 // Обслуживание общего имущества и мест общего пользования
-  }
+  };
 }
