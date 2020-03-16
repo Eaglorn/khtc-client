@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import user from "./user";
-import setting from "./setting";
+import calendar from "./calendar";
 
 Vue.use(Vuex);
 
@@ -19,7 +19,7 @@ export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       user,
-      setting
+      calendar
     },
 
     // enable strict mode (adds overhead!)

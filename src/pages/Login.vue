@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page>
     <div class="row justify-center">
       <div class="col-4">
         <q-card>
@@ -7,24 +7,24 @@
             <div class="text-h4">Авторизация</div>
           </q-card-section>
           <q-card-section>
-            <q-form @submit="onSubmit" class="q-gutter-md">
+            <q-form class="q-gutter-md" @submit="onSubmit">
               <q-input
-                filled
                 v-model="login"
+                :rules="[val => (val && val.length > 0) || 'Введите логин']"
+                filled
                 label="Логин *"
                 lazy-rules
-                :rules="[ val => val && val.length > 0 || 'Введите логин']"
               />
               <q-input
-                filled
-                type="password"
                 v-model="password"
+                :rules="[val => (val && val.length > 0) || 'Введите пароль']"
+                type="password"
+                filled
                 label="Пароль *"
                 lazy-rules
-                :rules="[ val => val && val.length > 0 || 'Введите пароль']"
               />
               <div class="row justify-center">
-                <q-btn label="Войти" type="submit" color="primary" />
+                <q-btn type="submit" label="Войти" color="primary" />
               </div>
             </q-form>
           </q-card-section>
