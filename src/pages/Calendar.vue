@@ -7,7 +7,6 @@
             <q-date v-model="date" :events="dates" event-color="orange" />
           </div>
         </template>
-
         <template v-slot:after>
           <q-tab-panels
             v-model="dates"
