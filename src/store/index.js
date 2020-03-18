@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import user from "./user";
 import calendar from "./calendar";
+import socket from "./socket";
 
 Vue.use(Vuex);
 
@@ -19,7 +20,8 @@ export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       user,
-      calendar
+      calendar,
+      socket
     },
 
     // enable strict mode (adds overhead!)

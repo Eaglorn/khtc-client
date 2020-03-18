@@ -18,6 +18,14 @@ const routes = [
       {
         path: "profile",
         component: () => import("pages/Profile.vue")
+      },
+      {
+        path: "calendars",
+        component: () => import("pages/Calendars.vue")
+      },
+      {
+        path: "calendar",
+        component: () => import("pages/Calendar.vue")
       }
     ]
   }
