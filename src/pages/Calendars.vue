@@ -40,6 +40,7 @@
         </q-card>
       </div>
     </div>
+      <q-btn fab icon="add" color="accent" style="position: absolute; right: 40px; bottom: 60px" v-on:click="createCalendar()" />
   </q-page>
 </template>
 
@@ -65,6 +66,13 @@ export default {
         login: this.$store.state.user.login,
         password: this.$store.state.user.password,
         id: id
+      });
+    },
+    createCalendar() {
+      this.$store.dispatch("calendar/createCalendar", {
+        app: this,
+        login: this.$store.state.user.login,
+        password: this.$store.state.user.password
       });
     }
   }
