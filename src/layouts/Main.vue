@@ -48,20 +48,22 @@
       bordered
       content-class="bg-grey-2"
     >
-      <q-list>
+      <q-list bordered separator padding class="rounded-borders">
         <q-item-label header>Меню</q-item-label>
         <q-item clickable v-ripple v-on:click="calendars()">
           <q-item-section avatar>
             <q-icon name="man" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Календари</q-item-label>
+            <q-item-label style="font-size:24px;"
+              ><i class="fad fa-calendar-alt fa-2x"></i> Календари</q-item-label
+            >
             <q-item-label caption></q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
     </q-drawer>
-      <br>
+    <br />
     <q-page-container>
       <router-view></router-view>
     </q-page-container>
@@ -81,13 +83,6 @@ export default {
     exit() {
       this.$store.dispatch("user/exit");
     },
-    /* profile() {
-      this.$store.dispatch("calendar/getCalendars", {
-        app: this,
-        login: this.$store.state.user.login,
-        password: this.$store.state.user.password
-      });
-    }, */
     calendars() {
       this.$store.dispatch("calendar/getCalendars", {
         app: this,
