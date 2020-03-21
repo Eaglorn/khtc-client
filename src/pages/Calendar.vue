@@ -3,7 +3,7 @@
     <q-toolbar>
       <q-breadcrumbs>
         <q-breadcrumbs-el label="Главная страница" to="/index" />
-        <q-breadcrumbs-el label="Календари" v-on:click="calendars()" />
+        <q-breadcrumbs-el label="Календари" to="" v-on:click="calendars()" />
         <q-breadcrumbs-el :label="this.$store.state.calendar.calendar.title" />
       </q-breadcrumbs>
     </q-toolbar>
@@ -38,6 +38,27 @@
         </q-splitter>
       </div>
     </div>
+    <q-btn
+      fab
+      icon="edit"
+      color="orange"
+      style="position: absolute; right: 160px; bottom: 60px"
+      v-on:click="editCalendar()"
+    />
+    <q-btn
+      fab
+      icon="add"
+      color="green"
+      style="position: absolute; right: 100px; bottom: 60px"
+      v-on:click="createEvents()"
+    />
+    <q-btn
+      fab
+      icon="delete"
+      color="red"
+      style="position: absolute; right: 40px; bottom: 60px"
+      v-on:click="deleteCalendar()"
+    />
   </q-page>
 </template>
 

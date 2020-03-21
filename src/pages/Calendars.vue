@@ -40,7 +40,13 @@
         </q-card>
       </div>
     </div>
-      <q-btn fab icon="add" color="accent" style="position: absolute; right: 40px; bottom: 60px" v-on:click="createCalendar()" />
+    <q-btn
+      fab
+      icon="add"
+      color="green"
+      style="position: absolute; right: 40px; bottom: 60px"
+      v-on:click="createCalendar()"
+    />
   </q-page>
 </template>
 
