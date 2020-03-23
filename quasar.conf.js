@@ -68,10 +68,14 @@ module.exports = function(ctx) {
         "QTabPanels",
         "QBadge",
         "QBreadcrumbs",
-        "QBreadcrumbsEl"
+        "QBreadcrumbsEl",
+        "QDialog"
       ],
 
-      directives: ["Ripple"],
+      directives: [
+        "Ripple",
+        "ClosePopup"
+      ],
 
       // Quasar plugins
       plugins: ["Notify"],

@@ -50,15 +50,36 @@
       icon="add"
       color="green"
       style="position: absolute; right: 100px; bottom: 60px"
-      v-on:click="createEvents()"
+      v-on:click="createCalendar()"
     />
     <q-btn
       fab
       icon="delete"
       color="red"
       style="position: absolute; right: 40px; bottom: 60px"
-      v-on:click="deleteCalendar()"
+      v-on:click="confirmDeleteCalendar()"
     />
+    <q-dialog v-model="deleteConfirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="delete" color="red" text-color="white" />
+          <span class="q-ml-sm" style="font-size:16px"
+            >Вы действительно хотите удалить этот календарь?</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="Да"
+            color="green"
+            v-close-popup
+            v-on:click="deleteCalendar()"
+          />
+          <q-btn flat label="Нет" color="red" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -67,7 +88,8 @@ export default {
   data() {
     return {
       splitterModel: 50,
-      date: "2019/02/01"
+      date: "2019/02/01",
+      deleteConfirm: false
     };
   },
   methods: {
@@ -76,6 +98,17 @@ export default {
         app: this,
         login: this.$store.state.user.login,
         password: this.$store.state.user.password
+      });
+    },
+    confirmDeleteCalendar() {
+      this.deleteConfirm = true;
+    },
+    deleteCalendar() {
+      this.$store.dispatch("calendar/deleteCalendar", {
+        app: this,
+        login: this.$store.state.user.login,
+        password: this.$store.state.user.password,
+        id: this.$store.state.calendar.calendar.id
       });
     }
   },

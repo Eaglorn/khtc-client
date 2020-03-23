@@ -10,7 +10,8 @@
       <div class="col-4">
         <q-card>
           <q-card-section>
-            <div class="text-h3 text-center">КАЛЕНДАРИ</div>
+            <div class="text-h3 text-center" v-if="this.$store.state.calendar.calendars.length === 0">У вас нет созданных календарей...</div>
+            <div class="text-h3 text-center" v-else>КАЛЕНДАРИ</div>
           </q-card-section>
           <template>
             <q-list>
