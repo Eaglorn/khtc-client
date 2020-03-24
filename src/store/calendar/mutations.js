@@ -14,3 +14,11 @@ export function updateEvents(state, value) {
 export function updateDates(state, value) {
   state.dates = value;
 }
+
+export function updateCalendarTitle(state, value) {
+  state.calendar.title = value;
+}
+
+export function updateCalendarText(state, value) {
+  state.calendar.text = value;
+}

@@ -10,6 +10,14 @@ export function updateDates(context, value) {
   context.commit("updateDates", value);
 }
 
+export function updateCalendarTitle(context, value) {
+  context.commit("updateCalendarTitle", value);
+}
+
+export function updateCalendarText(context, value) {
+  context.commit("updateCalendarText", value);
+}
+
 export function getCalendar(context, value) {
   value.app
     .$axios({

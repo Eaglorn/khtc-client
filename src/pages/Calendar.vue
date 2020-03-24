@@ -7,8 +7,27 @@
         <q-breadcrumbs-el :label="this.$store.state.calendar.calendar.title" />
       </q-breadcrumbs>
     </q-toolbar>
-    <div class="column items-center" style="width: 100%">
-      <div class="col" style="width: 400px">
+    <div class="row items-center">
+      <div class="col-1"></div>
+      <div class="col-3">
+        <div
+          class="q-pa-md"
+          style="max-width: 350px; height: 408px; padding: 16px;"
+        >
+          <q-card flat bordered>
+            <q-card-section>
+              <div class="text-h5" style="font-weight: bold;">
+                {{ calendarTitle }}
+              </div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              {{ calendarText }}
+            </q-card-section>
+          </q-card>
+        </div>
+      </div>
+      <div class="col-8">
         <q-splitter
           v-model="splitterModel"
           style="height: 450px; width: 800px;"
@@ -43,7 +62,7 @@
       icon="edit"
       color="orange"
       style="position: absolute; right: 160px; bottom: 60px"
-      v-on:click="editCalendar()"
+      v-on:click="confirmEditCalendar()"
     />
     <q-btn
       fab
@@ -80,6 +99,41 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+    <q-dialog v-model="editConfirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="edit" color="blue" text-color="white" />
+          <span class="q-ml-sm" style="font-size:16px"
+            >Редактирование календаря</span
+          >
+        </q-card-section>
+        <q-card-section class="q-pt-none q-gutter-md" style="max-width: 300px">
+          <q-input
+            rounded
+            outlined
+            v-model="calendarTitle"
+            label="Название календаря"
+          />
+          <q-input
+            label="Описание календаря"
+            v-model="calendarText"
+            filled
+            type="textarea"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="Сохранить"
+            color="green"
+            v-close-popup
+            v-on:click="editCalendar()"
+          />
+          <q-btn flat label="Отмена" color="red" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -89,7 +143,8 @@ export default {
     return {
       splitterModel: 50,
       date: "2019/02/01",
-      deleteConfirm: false
+      deleteConfirm: false,
+      editConfirm: false
     };
   },
   methods: {
@@ -110,7 +165,11 @@ export default {
         password: this.$store.state.user.password,
         id: this.$store.state.calendar.calendar.id
       });
-    }
+    },
+    confirmEditCalendar() {
+      this.editConfirm = true;
+    },
+    editCalendar() {}
   },
   computed: {
     events: {
@@ -127,6 +186,22 @@ export default {
       },
       set(val) {
         this.$store.commit("calendar/updateDates", val);
+      }
+    },
+    calendarTitle: {
+      get() {
+        return this.$store.state.calendar.calendar.title;
+      },
+      set(val) {
+        this.$store.commit("calendar/updateCalendarTitle", val);
+      }
+    },
+    calendarText: {
+      get() {
+        return this.$store.state.calendar.calendar.text;
+      },
+      set(val) {
+        this.$store.commit("calendar/updateCalendarText", val);
       }
     }
   }
