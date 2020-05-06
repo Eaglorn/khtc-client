@@ -16,9 +16,9 @@ export function updateDates(state, value) {
 }
 
 export function updateCalendarTitle(state, value) {
-  state.calendar.title = value;
+  state.calendarFormTitle = value;
 }
 
 export function updateCalendarText(state, value) {
-  state.calendar.text = value;
+  state.calendarFormText = value;
 }

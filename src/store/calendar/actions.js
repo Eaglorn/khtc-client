@@ -40,6 +40,8 @@ export function getCalendar(context, value) {
           calendar: response.data.calendar,
           events: response.data.events
         });
+        context.commit("updateCalendarTitle", response.data.calendar.title);
+        context.commit("updateCalendarText", response.data.calendar.text);
         var items = [];
         response.data.events.forEach(event => {
           items.push(event.date);

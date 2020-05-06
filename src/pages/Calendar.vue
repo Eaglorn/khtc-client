@@ -190,7 +190,7 @@ export default {
     },
     calendarTitle: {
       get() {
-        return this.$store.state.calendar.calendar.title;
+        return this.$store.state.calendar.calendarFormTitle;
       },
       set(val) {
         this.$store.commit("calendar/updateCalendarTitle", val);
@@ -198,7 +198,7 @@ export default {
     },
     calendarText: {
       get() {
-        return this.$store.state.calendar.calendar.text;
+        return this.$store.state.calendar.calendarFormText;
       },
       set(val) {
         this.$store.commit("calendar/updateCalendarText", val);
