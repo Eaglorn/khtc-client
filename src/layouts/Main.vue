@@ -61,6 +61,17 @@
             <q-item-label caption></q-item-label>
           </q-item-section>
         </q-item>
+        <q-item clickable v-ripple v-on:click="statement()">
+          <q-item-section avatar>
+            <q-icon name="man" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label style="font-size:24px;"
+              ><i class="fas fa-cabinet-filing"></i> Заявления</q-item-label
+            >
+            <q-item-label caption></q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
     <br />
