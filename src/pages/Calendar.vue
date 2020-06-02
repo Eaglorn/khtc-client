@@ -138,11 +138,13 @@
 </template>
 
 <script>
+import { date } from "quasar";
+
 export default {
   data() {
     return {
       splitterModel: 50,
-      date: "2019/02/01",
+      date: date.formatDate(Date.now(), "YYYY/MM/DD"),
       deleteConfirm: false,
       editConfirm: false
     };
