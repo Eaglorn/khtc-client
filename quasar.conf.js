@@ -6,7 +6,15 @@ module.exports = function(ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
-    boot: ["axios"],
+    boot: [
+      "axios",
+      {
+        path: "socket.io",
+        server: false,
+        actionPrefix: "socket_",
+        mutationPrefix: "SOCKET_"
+      }
+    ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.sass"],
@@ -69,7 +77,8 @@ module.exports = function(ctx) {
         "QBadge",
         "QBreadcrumbs",
         "QBreadcrumbsEl",
-        "QDialog"
+        "QDialog",
+        "SessionStorage"
       ],
 
       directives: [
@@ -130,7 +139,8 @@ module.exports = function(ctx) {
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {
-      pwa: false
+      pwa: false,
+      manualHydration: false
     },
 
     // https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa

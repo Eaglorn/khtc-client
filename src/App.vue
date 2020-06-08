@@ -7,7 +7,9 @@
 <script>
 export default {
   created() {
-    this.$router.push("/");
+    if (this.$route.path !== "/") {
+      this.$router.push("/");
+    }
   }
 };
 </script>
