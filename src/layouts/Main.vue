@@ -15,7 +15,7 @@
         <q-toolbar-title>
           Электронный Помощник ХТК
         </q-toolbar-title>
-        <q-btn dense color="purple" round icon="people" class="q-ml-md">
+        <q-btn dense color="purple" round icon="people" class="q-ml-md" v-if="auth">
           <q-badge color="red" floating>{{ peoples }}</q-badge>
         </q-btn>
         <span>&nbsp;&nbsp;&nbsp;</span>
@@ -85,14 +85,11 @@ export default {
       leftDrawerOpen: false
     };
   },
-  sockets: {
-    connect: function() {
-      this.$socket.client.emit("UPDATE_PEOPLES");
-    }
-  },
   methods: {
     exit() {
-      this.$store.dispatch("user/exit");
+      this.$store.dispatch("user/exit", {
+        app: this
+      });
     },
     calendars() {
       this.$store.dispatch("calendar/getCalendars", {

@@ -1,5 +1,6 @@
-export function exit(context) {
+export function exit(context, value) {
   context.commit("updateAuth", false);
+  value.app.$socket.client.disconnect();
 }
 
 export function updateAuth(context, value) {
@@ -41,6 +42,7 @@ export function auth(context, value) {
           context.commit("updateAuth", true);
           context.commit("updateLogin", value.login);
           context.commit("updatePassword", value.password);
+          value.app.$socket.client.open();
           if (value.app.$route.path !== "/index") {
             value.app.$router.push("/index");
           }
