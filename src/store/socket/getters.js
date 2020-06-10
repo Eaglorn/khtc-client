@@ -1,3 +1,3 @@
-export function socket(state) {
-  return state.socket;
+export function peoples(state) {
+  return state.peoples;
 }

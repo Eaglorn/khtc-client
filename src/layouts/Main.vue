@@ -12,7 +12,13 @@
           icon="menu"
         />
 
-        <q-toolbar-title>Электронный Помощник ХТК</q-toolbar-title>
+        <q-toolbar-title>
+          Электронный Помощник ХТК
+        </q-toolbar-title>
+        <q-btn dense color="purple" round icon="people" class="q-ml-md">
+          <q-badge color="red" floating>{{ peoples }}</q-badge>
+        </q-btn>
+        <span>&nbsp;&nbsp;&nbsp;</span>
         <q-btn-group push>
           <q-btn
             push
@@ -79,6 +85,11 @@ export default {
       leftDrawerOpen: false
     };
   },
+  sockets: {
+    connect: function() {
+      this.$socket.client.emit("UPDATE_PEOPLES");
+    }
+  },
   methods: {
     exit() {
       this.$store.dispatch("user/exit");
@@ -98,6 +109,11 @@ export default {
       },
       set(value) {
         this.$store.dispatch("user/updateAuth", value);
+      }
+    },
+    peoples: {
+      get() {
+        return this.$store.state.socket.peoples;
       }
     }
   }
