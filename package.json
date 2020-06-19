@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.8.2",
-    "axios": "^0.18.1",
-    "quasar": "^1.12.4",
+    "axios": "^0.19.2",
+    "quasar": "^1.12.6",
     "socket.io-client": "^2.3.0",
     "vue-socket.io": "^3.0.9",
     "vue-socket.io-extended": "^4.0.3"

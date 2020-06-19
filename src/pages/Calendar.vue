@@ -4,7 +4,7 @@
       <q-breadcrumbs>
         <q-breadcrumbs-el label="Главная страница" to="/index" />
         <q-breadcrumbs-el label="Календари" to="" v-on:click="calendars()" />
-        <q-breadcrumbs-el :label="this.$store.state.calendar.calendar.title" />
+        <q-breadcrumbs-el :label="calendarTitle" />
       </q-breadcrumbs>
     </q-toolbar>
     <div class="row items-center">
