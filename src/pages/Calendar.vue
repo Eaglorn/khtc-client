@@ -171,7 +171,16 @@ export default {
     confirmEditCalendar() {
       this.editConfirm = true;
     },
-    editCalendar() {}
+    editCalendar() {
+      this.$store.dispatch("calendar/editCalendar", {
+        app: this,
+        login: this.$store.state.user.login,
+        password: this.$store.state.user.password,
+        id: this.$store.state.calendar.calendar.id,
+        title: this.$store.state.calendar.calendarFormTitle,
+        text: this.$store.state.calendar.calendarFormText
+      });
+    }
   },
   computed: {
     events: {

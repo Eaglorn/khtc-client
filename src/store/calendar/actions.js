@@ -171,3 +171,32 @@ export function deleteCalendar(context, value) {
       });
     });
 }
+
+export function editCalendar(context, value) {
+  value.app
+    .$axios({
+      method: "post",
+      url: "http://46.8.146.12:4000/api/user/calendar/edit",
+      data: { login: value.login, password: value.password, id: value.id, title: value.title, text: value.text },
+      timeout: 5000,
+      responseType: "json"
+    })
+    .then(response => {
+      if (response.data.success === false) {
+        value.app.$q.notify({
+          color: "negative",
+          position: "top",
+          message: "Неверная авторизация",
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch(response => {
+      value.app.$q.notify({
+        color: "negative",
+        position: "top",
+        message: "Нет соединения с сервером",
+        icon: "report_problem"
+      });
+    });
+}
