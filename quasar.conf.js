@@ -78,7 +78,9 @@ module.exports = function(ctx) {
         "QBreadcrumbs",
         "QBreadcrumbsEl",
         "QDialog",
-        "SessionStorage"
+        "SessionStorage",
+        "QFab",
+        "QFabAction"
       ],
 
       directives: [

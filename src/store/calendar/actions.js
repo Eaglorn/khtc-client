@@ -157,9 +157,6 @@ export function deleteCalendar(context, value) {
         });
       } else {
         context.commit("updateCalendars", response.data.calendars);
-        if (value.app.$route.path !== "/calendars") {
-          value.app.$router.push("/calendars");
-        }
       }
     })
     .catch(response => {

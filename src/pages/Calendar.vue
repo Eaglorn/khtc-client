@@ -59,81 +59,25 @@
     </div>
     <q-btn
       fab
-      icon="edit"
-      color="orange"
+      icon="add"
+      color="green"
       style="position: absolute; right: 160px; bottom: 60px"
-      v-on:click="confirmEditCalendar()"
+      v-on:click="createEvent()"
     />
     <q-btn
       fab
-      icon="add"
-      color="green"
+      icon="edit"
+      color="orange"
       style="position: absolute; right: 100px; bottom: 60px"
-      v-on:click="createCalendar()"
+      v-on:click="confirmEditEvent()"
     />
     <q-btn
       fab
       icon="delete"
       color="red"
       style="position: absolute; right: 40px; bottom: 60px"
-      v-on:click="confirmDeleteCalendar()"
+      v-on:click="confirmDeleteEvent()"
     />
-    <q-dialog v-model="deleteConfirm" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <q-avatar icon="delete" color="red" text-color="white" />
-          <span class="q-ml-sm" style="font-size:16px"
-            >Вы действительно хотите удалить этот календарь?</span
-          >
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            label="Да"
-            color="green"
-            v-close-popup
-            v-on:click="deleteCalendar()"
-          />
-          <q-btn flat label="Нет" color="red" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-    <q-dialog v-model="editConfirm" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <q-avatar icon="edit" color="blue" text-color="white" />
-          <span class="q-ml-sm" style="font-size:16px"
-            >Редактирование календаря</span
-          >
-        </q-card-section>
-        <q-card-section class="q-pt-none q-gutter-md" style="max-width: 300px">
-          <q-input
-            rounded
-            outlined
-            v-model="calendarTitle"
-            label="Название календаря"
-          />
-          <q-input
-            label="Описание календаря"
-            v-model="calendarText"
-            filled
-            type="textarea"
-          />
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            label="Сохранить"
-            color="green"
-            v-close-popup
-            v-on:click="editCalendar()"
-          />
-          <q-btn flat label="Отмена" color="red" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </q-page>
 </template>
 
@@ -157,30 +101,7 @@ export default {
         password: this.$store.state.user.password
       });
     },
-    confirmDeleteCalendar() {
-      this.deleteConfirm = true;
-    },
-    deleteCalendar() {
-      this.$store.dispatch("calendar/deleteCalendar", {
-        app: this,
-        login: this.$store.state.user.login,
-        password: this.$store.state.user.password,
-        id: this.$store.state.calendar.calendar.id
-      });
-    },
-    confirmEditCalendar() {
-      this.editConfirm = true;
-    },
-    editCalendar() {
-      this.$store.dispatch("calendar/editCalendar", {
-        app: this,
-        login: this.$store.state.user.login,
-        password: this.$store.state.user.password,
-        id: this.$store.state.calendar.calendar.id,
-        title: this.$store.state.calendar.calendarFormTitle,
-        text: this.$store.state.calendar.calendarFormText
-      });
-    }
+    createEvent() {}
   },
   computed: {
     events: {
