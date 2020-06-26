@@ -17,7 +17,7 @@ import iconSet from 'quasar/icon-set/material-icons'
 
 import Vue from 'vue'
 
-import {Quasar,QLayout,QHeader,QDrawer,QPageContainer,QPage,QToolbar,QToolbarTitle,QBtn,QIcon,QList,QItem,QItemSection,QItemLabel,QForm,QInput,QCard,QCardSection,QCardActions,QDate,QResponsive,QAvatar,QSeparator,QSplitter,QBtnGroup,QTabPanel,QTabPanels,QBadge,QBreadcrumbs,QBreadcrumbsEl,QDialog,SessionStorage,QFab,QFabAction,Ripple,ClosePopup,Notify} from 'quasar'
+import {Quasar,QLayout,QHeader,QDrawer,QPageContainer,QPage,QToolbar,QToolbarTitle,QBtn,QIcon,QList,QItem,QItemSection,QItemLabel,QForm,QInput,QCard,QCardSection,QCardActions,QDate,QResponsive,QAvatar,QSeparator,QSplitter,QBtnGroup,QTabPanel,QTabPanels,QBadge,QBreadcrumbs,QBreadcrumbsEl,QDialog,QFab,QFabAction,QScrollArea,Ripple,ClosePopup,Notify,Cookies} from 'quasar'
 
 
-Vue.use(Quasar, { config: {"notify":{}},lang: lang,iconSet: iconSet,components: {QLayout,QHeader,QDrawer,QPageContainer,QPage,QToolbar,QToolbarTitle,QBtn,QIcon,QList,QItem,QItemSection,QItemLabel,QForm,QInput,QCard,QCardSection,QCardActions,QDate,QResponsive,QAvatar,QSeparator,QSplitter,QBtnGroup,QTabPanel,QTabPanels,QBadge,QBreadcrumbs,QBreadcrumbsEl,QDialog,SessionStorage,QFab,QFabAction},directives: {Ripple,ClosePopup},plugins: {Notify} })
+Vue.use(Quasar, { config: {"notify":{}},lang: lang,iconSet: iconSet,components: {QLayout,QHeader,QDrawer,QPageContainer,QPage,QToolbar,QToolbarTitle,QBtn,QIcon,QList,QItem,QItemSection,QItemLabel,QForm,QInput,QCard,QCardSection,QCardActions,QDate,QResponsive,QAvatar,QSeparator,QSplitter,QBtnGroup,QTabPanel,QTabPanels,QBadge,QBreadcrumbs,QBreadcrumbsEl,QDialog,QFab,QFabAction,QScrollArea},directives: {Ripple,ClosePopup},plugins: {Notify,Cookies} })

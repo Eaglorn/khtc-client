@@ -47,7 +47,7 @@
                       <q-fab-action
                         :hide-label="true"
                         color="warning"
-                        @click="confirmEditCalendar(calendar.id)"
+                        @click="confirmEditCalendar(calendar.id, calendar.title, calendar.text)"
                         icon="edit"
                       />
                       <q-fab-action
@@ -139,7 +139,11 @@ export default {
     return {
       fab: [],
       deleteConfirm: false,
-      editConfirm: false
+      editConfirm: false,
+      deleteId: 0,
+      editId: 0,
+      calendarTitle: "",
+      calendarText: ""
     };
   },
   computed: {
@@ -170,44 +174,31 @@ export default {
     },
     confirmDeleteCalendar(id) {
       this.deleteConfirm = true;
-      this.deletId = id;
+      this.deleteId = id;
     },
     deleteCalendar() {
       this.$store.dispatch("calendar/deleteCalendar", {
         app: this,
         login: this.$store.state.user.login,
         password: this.$store.state.user.password,
-        id: this.deletId
+        id: this.deleteId
       });
     },
-    confirmEditCalendar() {
+    confirmEditCalendar(id, titile, text) {
+      this.calendarTitle = titile;
+      this.calendarText = text;
       this.editConfirm = true;
+      this.editId = id;
     },
     editCalendar() {
       this.$store.dispatch("calendar/editCalendar", {
         app: this,
         login: this.$store.state.user.login,
         password: this.$store.state.user.password,
-        id: this.$store.state.calendar.calendar.id,
-        title: this.$store.state.calendar.calendarFormTitle,
-        text: this.$store.state.calendar.calendarFormText
+        id: this.editId,
+        title: this.calendarTitle,
+        text: this.calendarText
       });
-    },
-    calendarTitle: {
-      get() {
-        return this.$store.state.calendar.calendarFormTitle;
-      },
-      set(val) {
-        this.$store.commit("calendar/updateCalendarTitle", val);
-      }
-    },
-    calendarText: {
-      get() {
-        return this.$store.state.calendar.calendarFormText;
-      },
-      set(val) {
-        this.$store.commit("calendar/updateCalendarText", val);
-      }
     }
   }
 };

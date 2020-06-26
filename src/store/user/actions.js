@@ -1,6 +1,8 @@
 export function exit(context, value) {
   context.commit("updateAuth", false);
   value.app.$socket.client.disconnect();
+  value.app.cookies.remove("login");
+  value.app.cookies.remove("password");
 }
 
 export function updateAuth(context, value) {
@@ -33,15 +35,19 @@ export function auth(context, value) {
             icon: "report_problem"
           });
         } else {
-          value.app.$q.notify({
-            color: "teal",
-            position: "top",
-            message: "<i class='fad fa-check-circle'></i> Успешный вход",
-            html: true
-          });
           context.commit("updateAuth", true);
           context.commit("updateLogin", value.login);
+          try {
+            value.app.$q.cookies.set("login", value.login, { expires: 3 });
+          } catch (e) {
+            console.log(e);
+          }
           context.commit("updatePassword", value.password);
+          try {
+            value.app.$q.cookies.set("password", value.password, { expires: 3 });
+          } catch (e) {
+            console.log(e);
+          }
           value.app.$socket.client.open();
           if (value.app.$route.path !== "/index") {
             value.app.$router.push("/index");

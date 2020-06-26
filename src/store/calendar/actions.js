@@ -186,6 +186,8 @@ export function editCalendar(context, value) {
           message: "Неверная авторизация",
           icon: "report_problem"
         });
+      } else {
+        context.commit("updateCalendars", response.data.calendars);
       }
     })
     .catch(response => {

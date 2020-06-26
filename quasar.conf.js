@@ -78,18 +78,15 @@ module.exports = function(ctx) {
         "QBreadcrumbs",
         "QBreadcrumbsEl",
         "QDialog",
-        "SessionStorage",
         "QFab",
-        "QFabAction"
+        "QFabAction",
+        "QScrollArea"
       ],
 
-      directives: [
-        "Ripple",
-        "ClosePopup"
-      ],
+      directives: ["Ripple", "ClosePopup"],
 
       // Quasar plugins
-      plugins: ["Notify"],
+      plugins: ["Notify", "Cookies"],
 
       config: {
         notify: {
