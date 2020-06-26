@@ -156,7 +156,12 @@ export function deleteCalendar(context, value) {
           icon: "report_problem"
         });
       } else {
-        context.commit("updateCalendars", response.data.calendars);
+        context.commit(
+          "updateCalendars",
+          value.app.$store.state.calendar.calendars.filter(
+            calendar => calendar.id !== value.id
+          )
+        );
       }
     })
     .catch(response => {
@@ -174,7 +179,13 @@ export function editCalendar(context, value) {
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendar/edit",
-      data: { login: value.login, password: value.password, id: value.id, title: value.title, text: value.text },
+      data: {
+        login: value.login,
+        password: value.password,
+        id: value.id,
+        title: value.title,
+        text: value.text
+      },
       timeout: 5000,
       responseType: "json"
     })
@@ -187,7 +198,15 @@ export function editCalendar(context, value) {
           icon: "report_problem"
         });
       } else {
-        context.commit("updateCalendars", response.data.calendars);
+        var items = value.app.$store.state.calendar.calendars.slice();
+        items.forEach(function(item, i, items) {
+          console.log(item);
+          if (item.id === value.id) {
+            item.title = value.title;
+            item.text = value.text;
+          }
+        });
+        context.commit("updateCalendars", items);
       }
     })
     .catch(response => {
