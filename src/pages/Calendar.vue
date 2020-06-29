@@ -34,7 +34,14 @@
         >
           <template v-slot:before>
             <div class="q-pa-md">
-              <q-date v-model="date" :events="dates" event-color="orange" />
+              <q-date
+                v-model="date"
+                :events="dates"
+                event-color="orange"
+                input=""
+                ref="calendar"
+                v-on:click="calendarClick()"
+              />
             </div>
           </template>
           <template v-slot:after>
@@ -89,6 +96,8 @@ export default {
     return {
       splitterModel: 50,
       date: date.formatDate(Date.now(), "YYYY/MM/DD"),
+      innerMonth: 0,
+      innerYear: 0,
       deleteConfirm: false,
       editConfirm: false
     };
@@ -100,6 +109,23 @@ export default {
         login: this.$store.state.user.login,
         password: this.$store.state.user.password
       });
+    },
+    calendarClick() {
+      if (
+        this.innerMonth !== this.$refs.calendar.innerModel.month ||
+        this.innerYear !== this.$refs.calendar.innerModel.year
+      ) {
+        this.innerMonth = this.$refs.calendar.innerModel.month;
+        this.innerYear = this.$refs.calendar.innerModel.year;
+        this.$store.dispatch("calendar/getEventsMonth", {
+          app: this,
+          login: this.$store.state.user.login,
+          password: this.$store.state.user.password,
+          id: this.$store.state.calendar.calendar.id,
+          month: this.innerMonth,
+          year: this.innerYear
+        });
+      }
     },
     createEvent() {}
   },

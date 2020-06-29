@@ -84,11 +84,11 @@ export function createCalendar(context, value) {
           calendar: response.data.calendar,
           events: response.data.events
         });
-        var items = [];
+        var dates = [];
         response.data.events.forEach(event => {
-          items.push(event.date);
+          dates.push(event.date);
         });
-        context.commit("updateDates", items);
+        context.commit("updateDates", dates);
         if (value.app.$route.path !== "/calendar") {
           value.app.$router.push("/calendar");
         }
@@ -207,6 +207,47 @@ export function editCalendar(context, value) {
           }
         });
         context.commit("updateCalendars", items);
+      }
+    })
+    .catch(response => {
+      value.app.$q.notify({
+        color: "negative",
+        position: "top",
+        message: "Нет соединения с сервером",
+        icon: "report_problem"
+      });
+    });
+}
+
+export function getEventsMonth(context, value) {
+  value.app
+    .$axios({
+      method: "post",
+      url: "http://46.8.146.12:4000/api/user/calendar/dates_month",
+      data: {
+        login: value.login,
+        password: value.password,
+        id: value.id,
+        month: value.month - 1,
+        year: value.year
+      },
+      timeout: 5000,
+      responseType: "json"
+    })
+    .then(response => {
+      if (response.data.success === false) {
+        value.app.$q.notify({
+          color: "negative",
+          position: "top",
+          message: "Неверная авторизация",
+          icon: "report_problem"
+        });
+      } else {
+        var dates = [];
+        response.data.events.forEach(event => {
+          dates.push(event.date);
+        });
+        context.commit("updateDates", dates);
       }
     })
     .catch(response => {
