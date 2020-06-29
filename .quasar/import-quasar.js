@@ -17,7 +17,7 @@ import iconSet from 'quasar/icon-set/material-icons'
 
 import Vue from 'vue'
 
-import {Quasar,QLayout,QHeader,QDrawer,QPageContainer,QPage,QToolbar,QToolbarTitle,QBtn,QIcon,QList,QItem,QItemSection,QItemLabel,QForm,QInput,QCard,QCardSection,QCardActions,QDate,QResponsive,QAvatar,QSeparator,QSplitter,QBtnGroup,QTabPanel,QTabPanels,QBadge,QBreadcrumbs,QBreadcrumbsEl,QDialog,QFab,QFabAction,QScrollArea,QPagination,Ripple,ClosePopup,Notify,Cookies} from 'quasar'
+import {Quasar,Ripple,ClosePopup,Notify,Cookies} from 'quasar'
 
 
-Vue.use(Quasar, { config: {"notify":{}},lang: lang,iconSet: iconSet,components: {QLayout,QHeader,QDrawer,QPageContainer,QPage,QToolbar,QToolbarTitle,QBtn,QIcon,QList,QItem,QItemSection,QItemLabel,QForm,QInput,QCard,QCardSection,QCardActions,QDate,QResponsive,QAvatar,QSeparator,QSplitter,QBtnGroup,QTabPanel,QTabPanels,QBadge,QBreadcrumbs,QBreadcrumbsEl,QDialog,QFab,QFabAction,QScrollArea,QPagination},directives: {Ripple,ClosePopup},plugins: {Notify,Cookies} })
+Vue.use(Quasar, { config: {"notify":{}},lang: lang,iconSet: iconSet,directives: {Ripple,ClosePopup},plugins: {Notify,Cookies} })
