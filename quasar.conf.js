@@ -80,7 +80,8 @@ module.exports = function(ctx) {
         "QDialog",
         "QFab",
         "QFabAction",
-        "QScrollArea"
+        "QScrollArea",
+        "QPagination"
       ],
 
       directives: ["Ripple", "ClosePopup"],

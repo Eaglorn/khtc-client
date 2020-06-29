@@ -15,8 +15,6 @@ export default {
     try {
       login = this.$q.cookies.get("login");
       password = this.$q.cookies.get("password");
-      console.log(login);
-      console.log(password);
       if (login.length != null && password.length != null) {
         this.$store.dispatch("user/auth", {
           app: this,

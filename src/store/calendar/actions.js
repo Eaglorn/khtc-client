@@ -67,7 +67,7 @@ export function createCalendar(context, value) {
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendar/create",
-      data: { login: value.login, password: value.password },
+      data: { login: value.login, password: value.password, title: value.title, text: value.text },
       timeout: 5000,
       responseType: "json"
     })

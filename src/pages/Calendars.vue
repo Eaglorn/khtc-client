@@ -72,8 +72,43 @@
       icon="add"
       color="green"
       style="position: absolute; right: 40px; bottom: 60px"
-      v-on:click="createCalendar()"
+      v-on:click="confirmCreateCalendar()"
     />
+    <q-dialog v-model="createConfirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="calendar_today" color="green" text-color="white" />
+          <span class="q-ml-sm" style="font-size:16px"
+            >Создание нового календаря</span
+          >
+        </q-card-section>
+        <q-card-section class="q-pt-none q-gutter-md" style="max-width: 300px">
+          <q-input
+            rounded
+            outlined
+            v-model="createCalendarTitle"
+            label="Название календаря"
+          />
+          <q-input
+            label="Описание календаря"
+            v-model="createCalendarText"
+            filled
+            type="textarea"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="Да"
+            color="green"
+            v-close-popup
+            v-on:click="createCalendar()"
+          />
+          <q-btn flat label="Нет" color="red" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <q-dialog v-model="deleteConfirm" persistent>
       <q-card>
         <q-card-section class="row items-center">
@@ -107,12 +142,12 @@
           <q-input
             rounded
             outlined
-            v-model="calendarTitle"
+            v-model="editCalendarTitle"
             label="Название календаря"
           />
           <q-input
             label="Описание календаря"
-            v-model="calendarText"
+            v-model="editCalendarText"
             filled
             type="textarea"
           />
@@ -138,12 +173,15 @@ export default {
   data() {
     return {
       fab: [],
+      createConfirm: false,
       deleteConfirm: false,
       editConfirm: false,
       deleteId: 0,
       editId: 0,
-      calendarTitle: "",
-      calendarText: ""
+      createCalendarTitle: "",
+      createCalendarText: "",
+      editCalendarTitle: "",
+      editCalendarText: ""
     };
   },
   computed: {
@@ -165,11 +203,18 @@ export default {
         id: id
       });
     },
+    confirmCreateCalendar() {
+      this.createCalendarTitle = "";
+      this.createCalendarText = "";
+      this.createConfirm = true;
+    },
     createCalendar() {
       this.$store.dispatch("calendar/createCalendar", {
         app: this,
         login: this.$store.state.user.login,
-        password: this.$store.state.user.password
+        password: this.$store.state.user.password,
+        title: this.createCalendarTitle,
+        text: this.createCalendarText
       });
     },
     confirmDeleteCalendar(id) {
@@ -185,8 +230,8 @@ export default {
       });
     },
     confirmEditCalendar(id, titile, text) {
-      this.calendarTitle = titile;
-      this.calendarText = text;
+      this.editCalendarTitle = titile;
+      this.editCalendarText = text;
       this.editConfirm = true;
       this.editId = id;
     },
@@ -196,8 +241,8 @@ export default {
         login: this.$store.state.user.login,
         password: this.$store.state.user.password,
         id: this.editId,
-        title: this.calendarTitle,
-        text: this.calendarText
+        title: this.editCalendarTitle,
+        text: this.editCalendarText
       });
     }
   }
