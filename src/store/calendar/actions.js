@@ -36,17 +36,17 @@ export function getCalendar(context, value) {
           icon: "report_problem"
         });
       } else {
+        var items = [];
+        response.data.dates.forEach(event => {
+          items.push(event.date);
+        });
+        context.commit("updateDates", items);
         context.commit("updateCalendar", {
           calendar: response.data.calendar,
           events: response.data.events
         });
         context.commit("updateCalendarTitle", response.data.calendar.title);
         context.commit("updateCalendarText", response.data.calendar.text);
-        var items = [];
-        response.data.events.forEach(event => {
-          items.push(event.date);
-        });
-        context.commit("updateDates", items);
         if (value.app.$route.path !== "/calendar") {
           value.app.$router.push("/calendar");
         }
@@ -67,7 +67,12 @@ export function createCalendar(context, value) {
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendar/create",
-      data: { login: value.login, password: value.password, title: value.title, text: value.text },
+      data: {
+        login: value.login,
+        password: value.password,
+        title: value.title,
+        text: value.text
+      },
       timeout: 5000,
       responseType: "json"
     })
@@ -219,7 +224,7 @@ export function editCalendar(context, value) {
     });
 }
 
-export function getEventsMonth(context, value) {
+export function getDatesMonth(context, value) {
   value.app
     .$axios({
       method: "post",
@@ -248,6 +253,44 @@ export function getEventsMonth(context, value) {
           dates.push(event.date);
         });
         context.commit("updateDates", dates);
+      }
+    })
+    .catch(response => {
+      value.app.$q.notify({
+        color: "negative",
+        position: "top",
+        message: "Нет соединения с сервером",
+        icon: "report_problem"
+      });
+    });
+}
+
+export function getEventsDay(context, value) {
+  value.app
+    .$axios({
+      method: "post",
+      url: "http://46.8.146.12:4000/api/user/calendar/events_day",
+      data: {
+        login: value.login,
+        password: value.password,
+        id: value.id,
+        day: value.day,
+        month: value.month - 1,
+        year: value.year
+      },
+      timeout: 5000,
+      responseType: "json"
+    })
+    .then(response => {
+      if (response.data.success === false) {
+        value.app.$q.notify({
+          color: "negative",
+          position: "top",
+          message: "Неверная авторизация",
+          icon: "report_problem"
+        });
+      } else {
+        context.commit("updateEvents", response.data.events);
       }
     })
     .catch(response => {

@@ -38,28 +38,52 @@
                 v-model="date"
                 :events="dates"
                 event-color="orange"
-                input=""
+                @input="calendarPickDate"
                 ref="calendar"
                 v-on:click="calendarClick()"
               />
             </div>
           </template>
           <template v-slot:after>
-            <q-tab-panels
-              v-model="date"
-              animated
-              transition-prev="jump-up"
-              transition-next="jump-up"
-              v-for="event in events"
-              :key="event.id"
-            >
-              <q-tab-panel :name="event.date">
-                <div class="text-h4 q-mb-md">{{ event.title }}</div>
-                <p>
-                  {{ event.text }}
-                </p>
-              </q-tab-panel>
-            </q-tab-panels>
+            <q-list>
+              <div
+                v-for="event in events"
+                :key="event.id"
+              >
+                <q-item clickable>
+                  <q-item-section side>
+                    <q-badge color="teal" :label="event.id" />
+                  </q-item-section>
+                  <q-item-section v-ripple>
+                    <q-item-label style="font-size: 24px;">{{
+                      event.title
+                    }}</q-item-label>
+                  </q-item-section>
+                  <q-item-section side>
+                    <q-fab
+                      external-label
+                      color="primary"
+                      icon="keyboard_arrow_right"
+                      direction="right"
+                      :hide-label="true"
+                    >
+                      <q-fab-action
+                        :hide-label="true"
+                        color="warning"
+                        icon="edit"
+                      />
+                      <q-fab-action
+                        :hide-label="true"
+                        color="negative"
+                        icon="delete"
+                      />
+                    </q-fab>
+                  </q-item-section>
+                </q-item>
+
+                <q-separator spaced inset />
+              </div>
+            </q-list>
           </template>
         </q-splitter>
       </div>
@@ -117,13 +141,26 @@ export default {
       ) {
         this.innerMonth = this.$refs.calendar.innerModel.month;
         this.innerYear = this.$refs.calendar.innerModel.year;
-        this.$store.dispatch("calendar/getEventsMonth", {
+        this.$store.dispatch("calendar/getDatesMonth", {
           app: this,
           login: this.$store.state.user.login,
           password: this.$store.state.user.password,
           id: this.$store.state.calendar.calendar.id,
           month: this.innerMonth,
           year: this.innerYear
+        });
+      }
+    },
+    calendarPickDate(value, reason, details) {
+      if (details.changed === true) {
+        this.$store.dispatch("calendar/getEventsDay", {
+          app: this,
+          login: this.$store.state.user.login,
+          password: this.$store.state.user.password,
+          id: this.$store.state.calendar.calendar.id,
+          day: details.day,
+          month: details.month,
+          year: details.year
         });
       }
     },

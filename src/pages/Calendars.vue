@@ -47,7 +47,13 @@
                       <q-fab-action
                         :hide-label="true"
                         color="warning"
-                        @click="confirmEditCalendar(calendar.id, calendar.title, calendar.text)"
+                        @click="
+                          confirmEditCalendar(
+                            calendar.id,
+                            calendar.title,
+                            calendar.text
+                          )
+                        "
                         icon="edit"
                       />
                       <q-fab-action
