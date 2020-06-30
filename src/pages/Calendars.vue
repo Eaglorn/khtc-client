@@ -55,6 +55,7 @@
                           )
                         "
                         icon="edit"
+                        style="left:5px;"
                       />
                       <q-fab-action
                         :hide-label="true"
@@ -204,8 +205,6 @@ export default {
     toCalendar(id) {
       this.$store.dispatch("calendar/getCalendar", {
         app: this,
-        login: this.$store.state.user.login,
-        password: this.$store.state.user.password,
         id: id
       });
     },
@@ -218,7 +217,6 @@ export default {
       this.$store.dispatch("calendar/createCalendar", {
         app: this,
         login: this.$store.state.user.login,
-        password: this.$store.state.user.password,
         title: this.createCalendarTitle,
         text: this.createCalendarText
       });
@@ -230,8 +228,6 @@ export default {
     deleteCalendar() {
       this.$store.dispatch("calendar/deleteCalendar", {
         app: this,
-        login: this.$store.state.user.login,
-        password: this.$store.state.user.password,
         id: this.deleteId
       });
     },
@@ -244,8 +240,6 @@ export default {
     editCalendar() {
       this.$store.dispatch("calendar/editCalendar", {
         app: this,
-        login: this.$store.state.user.login,
-        password: this.$store.state.user.password,
         id: this.editId,
         title: this.editCalendarTitle,
         text: this.editCalendarText

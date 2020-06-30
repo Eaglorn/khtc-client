@@ -1,8 +1,8 @@
 export function exit(context, value) {
   context.commit("updateAuth", false);
   value.app.$socket.client.disconnect();
-  value.app.cookies.remove("login");
-  value.app.cookies.remove("password");
+  value.app.$q.cookies.remove("login");
+  value.app.$q.cookies.remove("password");
 }
 
 export function updateAuth(context, value) {
@@ -44,7 +44,9 @@ export function auth(context, value) {
           }
           context.commit("updatePassword", value.password);
           try {
-            value.app.$q.cookies.set("password", value.password, { expires: 3 });
+            value.app.$q.cookies.set("password", value.password, {
+              expires: 3
+            });
           } catch (e) {
             console.log(e);
           }
@@ -55,12 +57,7 @@ export function auth(context, value) {
         }
       }
     })
-    .catch(response => {
-      value.app.$q.notify({
-        color: "negative",
-        position: "top",
-        message: "Нет соединения с сервером",
-        icon: "report_problem"
-      });
+    .catch(function(err) {
+      console.log(err);
     });
 }

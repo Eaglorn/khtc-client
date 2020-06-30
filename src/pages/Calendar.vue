@@ -44,47 +44,43 @@
               />
             </div>
           </template>
-          <template v-slot:after>
-            <q-list>
-              <div
-                v-for="event in events"
-                :key="event.id"
-              >
-                <q-item clickable>
-                  <q-item-section side>
-                    <q-badge color="teal" :label="event.id" />
-                  </q-item-section>
-                  <q-item-section v-ripple>
-                    <q-item-label style="font-size: 24px;">{{
-                      event.title
-                    }}</q-item-label>
-                  </q-item-section>
-                  <q-item-section side>
-                    <q-fab
-                      external-label
-                      color="primary"
-                      icon="keyboard_arrow_right"
-                      direction="right"
+          <q-list>
+            <div v-for="event in events" :key="event.id">
+              <q-item clickable>
+                <q-item-section side>
+                  <q-badge color="teal" :label="event.id" />
+                </q-item-section>
+                <q-item-section v-ripple>
+                  <q-item-label style="font-size: 24px;">{{
+                    event.title
+                  }}</q-item-label>
+                </q-item-section>
+                <q-item-section side>
+                  <q-fab
+                    external-label
+                    color="primary"
+                    icon="keyboard_arrow_right"
+                    direction="right"
+                    :hide-label="true"
+                  >
+                    <q-fab-action
                       :hide-label="true"
-                    >
-                      <q-fab-action
-                        :hide-label="true"
-                        color="warning"
-                        icon="edit"
-                      />
-                      <q-fab-action
-                        :hide-label="true"
-                        color="negative"
-                        icon="delete"
-                      />
-                    </q-fab>
-                  </q-item-section>
-                </q-item>
+                      color="warning"
+                      icon="edit"
+                    />
+                    <q-fab-action
+                      :hide-label="true"
+                      color="negative"
+                      @click="confirmDeleteEvent(event.id)"
+                      icon="delete"
+                    />
+                  </q-fab>
+                </q-item-section>
+              </q-item>
 
-                <q-separator spaced inset />
-              </div>
-            </q-list>
-          </template>
+              <q-separator spaced inset />
+            </div>
+          </q-list>
         </q-splitter>
       </div>
     </div>
@@ -92,23 +88,65 @@
       fab
       icon="add"
       color="green"
-      style="position: absolute; right: 160px; bottom: 60px"
+      style="position: absolute; right: 40px; bottom: 60px"
       v-on:click="createEvent()"
     />
-    <q-btn
-      fab
-      icon="edit"
-      color="orange"
-      style="position: absolute; right: 100px; bottom: 60px"
-      v-on:click="confirmEditEvent()"
-    />
-    <q-btn
-      fab
-      icon="delete"
-      color="red"
-      style="position: absolute; right: 40px; bottom: 60px"
-      v-on:click="confirmDeleteEvent()"
-    />
+    <q-dialog v-model="createConfirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="calendar_today" color="green" text-color="white" />
+          <span class="q-ml-sm" style="font-size:16px"
+            >Создание нового события</span
+          >
+        </q-card-section>
+        <q-card-section class="q-pt-none q-gutter-md" style="max-width: 300px">
+          <q-input
+            rounded
+            outlined
+            v-model="createEventTitle"
+            label="Название календаря"
+          />
+          <q-input
+            label="Описание календаря"
+            v-model="createEventText"
+            filled
+            type="textarea"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="Да"
+            color="green"
+            v-close-popup
+            v-on:click="createEvent()"
+          />
+          <q-btn flat label="Нет" color="red" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="deleteConfirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="delete" color="red" text-color="white" />
+          <span class="q-ml-sm" style="font-size:16px"
+            >Вы действительно хотите удалить это событие?</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="Да"
+            color="green"
+            v-close-popup
+            v-on:click="deleteEvent()"
+          />
+          <q-btn flat label="Нет" color="red" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -122,19 +160,21 @@ export default {
       date: date.formatDate(Date.now(), "YYYY/MM/DD"),
       innerMonth: 0,
       innerYear: 0,
-      deleteConfirm: false,
-      editConfirm: false
+      createEventTitle: "",
+      createEventText: "",
+      createConfirm: false,
+      deleteConfirm: false
     };
   },
   methods: {
     calendars() {
       this.$store.dispatch("calendar/getCalendars", {
         app: this,
-        login: this.$store.state.user.login,
-        password: this.$store.state.user.password
+        login: this.$store.state.user.login
       });
     },
     calendarClick() {
+      console.log(this.$refs.calendar.value);
       if (
         this.innerMonth !== this.$refs.calendar.innerModel.month ||
         this.innerYear !== this.$refs.calendar.innerModel.year
@@ -143,8 +183,6 @@ export default {
         this.innerYear = this.$refs.calendar.innerModel.year;
         this.$store.dispatch("calendar/getDatesMonth", {
           app: this,
-          login: this.$store.state.user.login,
-          password: this.$store.state.user.password,
           id: this.$store.state.calendar.calendar.id,
           month: this.innerMonth,
           year: this.innerYear
@@ -155,8 +193,6 @@ export default {
       if (details.changed === true) {
         this.$store.dispatch("calendar/getEventsDay", {
           app: this,
-          login: this.$store.state.user.login,
-          password: this.$store.state.user.password,
           id: this.$store.state.calendar.calendar.id,
           day: details.day,
           month: details.month,
@@ -164,7 +200,30 @@ export default {
         });
       }
     },
-    createEvent() {}
+    confirmDeleteEvent(id) {
+      this.deleteConfirm = true;
+      this.deleteId = id;
+    },
+    deleteEvent() {
+      this.$store.dispatch("calendar/deleteEvent", {
+        app: this,
+        login: this.$store.state.user.login,
+        id: this.deleteId
+      });
+    },
+    confirmCreateEvent() {
+      this.createEventTitle = "";
+      this.createEventText = "";
+      this.createConfirm = true;
+    },
+    createEvent() {
+      this.$store.dispatch("calendar/createEvent", {
+        app: this,
+        title: this.createCalendarTitle,
+        text: this.createCalendarText,
+        calendar: this.$store.state.calendar.calendar.id
+      });
+    }
   },
   computed: {
     events: {

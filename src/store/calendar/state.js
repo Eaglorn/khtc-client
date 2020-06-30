@@ -1,6 +1,9 @@
 export default function() {
   return {
-    calendar: null,
+    calendar: {
+      title: "",
+      text: ""
+    },
     calendarFormTitle: "",
     calendarFormText: "",
     events: [],

@@ -33,17 +33,13 @@ module.exports = function(ctx) {
 
       directives: ["Ripple", "ClosePopup"],
 
-      // Quasar plugins
       plugins: ["Notify", "Cookies"],
 
       config: {
-        notify: {
-          /* Notify defaults */
-        }
+        notify: {}
       }
     },
 
-    // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: "hash",
       minify: true,
