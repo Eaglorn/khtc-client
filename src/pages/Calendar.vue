@@ -181,7 +181,7 @@ export default {
       ) {
         this.innerMonth = this.$refs.calendar.innerModel.month;
         this.innerYear = this.$refs.calendar.innerModel.year;
-        this.$store.dispatch("calendar/getDatesMonth", {
+        this.$store.dispatch("event/getDatesMonth", {
           app: this,
           id: this.$store.state.calendar.calendar.id,
           month: this.innerMonth,
@@ -191,7 +191,7 @@ export default {
     },
     calendarPickDate(value, reason, details) {
       if (details.changed === true) {
-        this.$store.dispatch("calendar/getEventsDay", {
+        this.$store.dispatch("event/getEventsDay", {
           app: this,
           id: this.$store.state.calendar.calendar.id,
           day: details.day,
@@ -228,18 +228,18 @@ export default {
   computed: {
     events: {
       get() {
-        return this.$store.state.calendar.events;
+        return this.$store.state.event.events;
       },
       set(val) {
-        this.$store.commit("calendar/updateEvents", val);
+        this.$store.commit("event/updateEvents", val);
       }
     },
     dates: {
       get() {
-        return this.$store.state.calendar.dates;
+        return this.$store.state.event.dates;
       },
       set(val) {
-        this.$store.commit("calendar/updateDates", val);
+        this.$store.commit("event/updateDates", val);
       }
     },
     calendarTitle: {

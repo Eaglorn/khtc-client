@@ -6,8 +6,6 @@ export default function() {
     },
     calendarFormTitle: "",
     calendarFormText: "",
-    events: [],
-    dates: [],
     calendars: []
   };
 }

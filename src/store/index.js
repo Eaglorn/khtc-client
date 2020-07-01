@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import user from "./user";
 import calendar from "./calendar";
 import socket from "./socket";
+import event from "./event";
 
 Vue.use(Vuex);
 
@@ -21,7 +22,8 @@ export default function(/* { ssrContext } */) {
     modules: {
       user,
       calendar,
-      socket
+      socket,
+      event
     },
 
     // enable strict mode (adds overhead!)
