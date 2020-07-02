@@ -18,12 +18,12 @@ export function updateCalendarText(context, value) {
   context.commit("updateCalendarText", value);
 }
 
-export function getCalendar(context, value) {
-  value.app
+export function getCalendar(context, { app, id }) {
+  app
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendar",
-      data: { id: value.id },
+      data: { id: id },
       timeout: 5000,
       responseType: "json"
     })
@@ -39,8 +39,8 @@ export function getCalendar(context, value) {
       });
       context.commit("updateCalendarTitle", response.data.calendar.title);
       context.commit("updateCalendarText", response.data.calendar.text);
-      if (value.app.$route.path !== "/calendar") {
-        value.app.$router.push("/calendar");
+      if (app.$route.path !== "/calendar") {
+        app.$router.push("/calendar");
       }
     })
     .catch(function(err) {
@@ -48,16 +48,16 @@ export function getCalendar(context, value) {
     });
 }
 
-export function createCalendar(context, value) {
-  value.app
+export function createCalendar(context, { app, login, password, title, text }) {
+  app
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendar/create",
       data: {
-        login: value.login,
-        password: value.password,
-        title: value.title,
-        text: value.text
+        login: login,
+        password: password,
+        title: title,
+        text: text
       },
       timeout: 5000,
       responseType: "json"
@@ -72,8 +72,8 @@ export function createCalendar(context, value) {
         dates.push(event.date);
       });
       context.commit("event/updateDates", dates);
-      if (value.app.$route.path !== "/calendar") {
-        value.app.$router.push("/calendar");
+      if (app.$route.path !== "/calendar") {
+        app.$router.push("/calendar");
       }
     })
     .catch(function(err) {
@@ -81,19 +81,19 @@ export function createCalendar(context, value) {
     });
 }
 
-export function getCalendars(context, value) {
-  value.app
+export function getCalendars(context, { app, login }) {
+  app
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendars",
-      data: { login: value.login },
+      data: { login: login },
       timeout: 5000,
       responseType: "json"
     })
     .then(response => {
       context.commit("updateCalendars", response.data.calendars);
-      if (value.app.$route.path !== "/calendars") {
-        value.app.$router.push("/calendars");
+      if (app.$route.path !== "/calendars") {
+        app.$router.push("/calendars");
       }
     })
     .catch(function(err) {
@@ -101,20 +101,20 @@ export function getCalendars(context, value) {
     });
 }
 
-export function deleteCalendar(context, value) {
-  value.app
+export function deleteCalendar(context, { app, id }) {
+  app
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendar/delete",
-      data: { id: value.id },
+      data: { id: id },
       timeout: 5000,
       responseType: "json"
     })
     .then(response => {
       context.commit(
         "updateCalendars",
-        value.app.$store.state.calendar.calendars.filter(
-          calendar => calendar.id !== value.id
+        app.$store.state.calendar.calendars.filter(
+          calendar => calendar.id !== id
         )
       );
     })
@@ -123,25 +123,25 @@ export function deleteCalendar(context, value) {
     });
 }
 
-export function editCalendar(context, value) {
-  value.app
+export function editCalendar(context, { app, id, title, text }) {
+  app
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendar/edit",
       data: {
-        id: value.id,
-        title: value.title,
-        text: value.text
+        id: id,
+        title: title,
+        text: text
       },
       timeout: 5000,
       responseType: "json"
     })
     .then(response => {
-      var items = value.app.$store.state.calendar.calendars.slice();
+      var items = app.$store.state.calendar.calendars.slice();
       items.forEach(function(item, i, items) {
-        if (item.id === value.id) {
-          item.title = value.title;
-          item.text = value.text;
+        if (item.id === id) {
+          item.title = title;
+          item.text = text;
         }
       });
       context.commit("updateCalendars", items);
