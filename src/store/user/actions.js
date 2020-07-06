@@ -9,18 +9,23 @@ export function updateAuth(context, value) {
   context.commit("updateAuth", value);
 }
 
-export function auth(context, { app, login, password }) {
-  app
+export function auth(context, value) {
+  value.app
     .$axios({
       method: "post",
+<<<<<<< HEAD
       url: "http://46.8.146.12:4000/api/user/authorization",
       data: { login: login, password: password },
+=======
+      url: "http://46.8.146.12:4000/api/authorization",
+      data: { login: value.login, password: value.password },
+>>>>>>> parent of a1d399b... update
       timeout: 5000,
       responseType: "json"
     })
     .then(response => {
       if (response.data.login === false) {
-        app.$q.notify({
+        value.app.$q.notify({
           color: "negative",
           position: "top",
           message: "Пользователя с таким логином нет",
@@ -28,7 +33,7 @@ export function auth(context, { app, login, password }) {
         });
       } else {
         if (response.data.password === false) {
-          app.$q.notify({
+          value.app.$q.notify({
             color: "negative",
             position: "top",
             message: "Не верный пароль",
@@ -36,23 +41,23 @@ export function auth(context, { app, login, password }) {
           });
         } else {
           context.commit("updateAuth", true);
-          context.commit("updateLogin", login);
+          context.commit("updateLogin", value.login);
           try {
-            app.$q.cookies.set("login", login, { expires: 3 });
+            value.app.$q.cookies.set("login", value.login, { expires: 3 });
           } catch (e) {
             console.log(e);
           }
-          context.commit("updatePassword", password);
+          context.commit("updatePassword", value.password);
           try {
-            app.$q.cookies.set("password", password, {
+            value.app.$q.cookies.set("password", value.password, {
               expires: 3
             });
           } catch (e) {
             console.log(e);
           }
-          app.$socket.client.open();
-          if (app.$route.path !== "/index") {
-            app.$router.push("/index");
+          value.app.$socket.client.open();
+          if (value.app.$route.path !== "/index") {
+            value.app.$router.push("/index");
           }
         }
       }

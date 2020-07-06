@@ -1,12 +1,12 @@
-export function getDatesMonth(context, { app, id, month, year }) {
-  app
+export function getDatesMonth(context, value) {
+  value.app
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendar/dates/month",
       data: {
-        id: id,
-        month: month - 1,
-        year: year
+        id: value.id,
+        month: value.month - 1,
+        year: value.year
       },
       timeout: 5000,
       responseType: "json"
@@ -23,16 +23,16 @@ export function getDatesMonth(context, { app, id, month, year }) {
     });
 }
 
-export function getEventsDay(context, { app, id, day, month, year }) {
-  app
+export function getEventsDay(context, value) {
+  value.app
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendar/events/day",
       data: {
-        id: id,
-        day: day,
-        month: month - 1,
-        year: year
+        id: value.id,
+        day: value.day,
+        month: value.month - 1,
+        year: value.year
       },
       timeout: 5000,
       responseType: "json"
