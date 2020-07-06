@@ -15,17 +15,13 @@
     "core-js": "^3.0.0",
     "quasar": "^1.12.8",
     "socket.io-client": "^2.3.0",
-    "typescript": "^3.9.6",
     "vue-socket.io": "^3.0.9",
     "vue-socket.io-extended": "^4.0.3"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.1",
-    "@typescript-eslint/eslint-plugin": "^3.5.0",
-    "@typescript-eslint/parser": "^3.5.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-loader": "^3.0.3",
     "eslint-plugin-import": "^2.14.0",
