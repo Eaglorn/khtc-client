@@ -13,7 +13,7 @@ export function auth(context, { app, login, password }) {
   app
     .$axios({
       method: "post",
-      url: "http://46.8.146.12:4000/api/authorization",
+      url: "http://46.8.146.12:4000/api/user/authorization",
       data: { login: login, password: password },
       timeout: 5000,
       responseType: "json"

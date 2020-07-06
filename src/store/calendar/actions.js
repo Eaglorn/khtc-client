@@ -71,7 +71,7 @@ export function createCalendar(context, { app, login, password, title, text }) {
       response.data.events.forEach(event => {
         dates.push(event.date);
       });
-      context.commit("event/updateDates", dates);
+      app.$store.dispatch("event/updateDates", dates);
       if (app.$route.path !== "/calendar") {
         app.$router.push("/calendar");
       }
