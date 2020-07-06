@@ -1,5 +1,11 @@
 module.exports = function(ctx) {
   return {
+    supportTS: {
+      tsCheckerConfig: {
+        eslint: true
+      }
+    },
+
     boot: [
       "axios",
       {
