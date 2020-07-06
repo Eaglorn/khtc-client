@@ -1,6 +1,5 @@
 export function updateCalendar(state, value) {
-  state.calendar = value.calendar;
-  state.events = value.events;
+  state.calendar = value;
 }
 
 export function updateCalendars(state, value) {
@@ -8,9 +7,9 @@ export function updateCalendars(state, value) {
 }
 
 export function updateCalendarTitle(state, value) {
-  state.calendarFormTitle = value;
+  state.calendar.title = value;
 }
 
 export function updateCalendarText(state, value) {
-  state.calendarFormText = value;
+  state.calendar.text = value;
 }

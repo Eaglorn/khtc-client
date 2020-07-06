@@ -174,7 +174,6 @@ export default {
       });
     },
     calendarClick() {
-      console.log(this.$refs.calendar.value);
       if (
         this.innerMonth !== this.$refs.calendar.innerModel.month ||
         this.innerYear !== this.$refs.calendar.innerModel.year
@@ -205,7 +204,7 @@ export default {
       this.deleteId = id;
     },
     deleteEvent() {
-      this.$store.dispatch("calendar/deleteEvent", {
+      this.$store.dispatch("event/deleteEvent", {
         app: this,
         login: this.$store.state.user.login,
         id: this.deleteId
@@ -217,7 +216,7 @@ export default {
       this.createConfirm = true;
     },
     createEvent() {
-      this.$store.dispatch("calendar/createEvent", {
+      this.$store.dispatch("event/createEvent", {
         app: this,
         title: this.createCalendarTitle,
         text: this.createCalendarText,
@@ -252,7 +251,7 @@ export default {
     },
     calendarText: {
       get() {
-        return this.$store.state.calendar.calendar.text;
+        return this.$store.state.calendar.calendar.title;
       },
       set(val) {
         this.$store.commit("calendar/updateCalendarText", val);

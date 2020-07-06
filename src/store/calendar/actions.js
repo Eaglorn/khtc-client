@@ -6,10 +6,6 @@ export function updateCalendars(context, value) {
   context.commit("updateCalendars", value);
 }
 
-export function updateDates(context, value) {
-  context.commit("updateDates", value);
-}
-
 export function updateCalendarTitle(context, value) {
   context.commit("updateCalendarTitle", value);
 }
@@ -32,13 +28,11 @@ export function getCalendar(context, { app, id }) {
       response.data.dates.forEach(event => {
         items.push(event.date);
       });
-      context.commit("event/updateDates", items);
-      context.commit("updateCalendar", {
-        calendar: response.data.calendar,
-        events: response.data.events
-      });
+      context.commit("updateCalendar", response.data.calendar);
       context.commit("updateCalendarTitle", response.data.calendar.title);
       context.commit("updateCalendarText", response.data.calendar.text);
+      app.$store.dispatch("event/updateDates", items);
+      app.$store.dispatch("event/updateEvents", response.data.events);
       if (app.$route.path !== "/calendar") {
         app.$router.push("/calendar");
       }
@@ -63,15 +57,13 @@ export function createCalendar(context, { app, login, password, title, text }) {
       responseType: "json"
     })
     .then(response => {
-      context.commit("updateCalendar", {
-        calendar: response.data.calendar,
-        events: response.data.events
-      });
+      context.commit("updateCalendar", response.data.calendar);
       var dates = [];
       response.data.events.forEach(event => {
         dates.push(event.date);
       });
       app.$store.dispatch("event/updateDates", dates);
+      app.$store.dispatch("event/updateEvents", response.data.events);
       if (app.$route.path !== "/calendar") {
         app.$router.push("/calendar");
       }

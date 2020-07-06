@@ -1,3 +1,11 @@
+export function updateDates(context, value) {
+  context.commit("updateDates", value);
+}
+
+export function updateEvents(context, value) {
+  context.commit("updateEvents", value);
+}
+
 export function getDatesMonth(context, { app, id, month, year }) {
   app
     .$axios({
@@ -45,22 +53,23 @@ export function getEventsDay(context, { app, id, day, month, year }) {
     });
 }
 
-export function deleteEvent(context, value) {
-  value.app
+export function deleteEvent(context, { app, id }) {
+  app
     .$axios({
       method: "post",
       url: "http://46.8.146.12:4000/api/user/calendar/event/delete",
-      data: { id: value.id },
+      data: { id: id },
       timeout: 5000,
       responseType: "json"
     })
     .then(response => {
       context.commit(
         "updateEvents",
-        value.app.$store.state.event.events.filter(
-          event => event.id !== value.id
+        app.$store.state.event.events.filter(
+          event => event.id !== id
         )
       );
+      context.commit("updateDates", response.data.events);
     })
     .catch(function(err) {
       console.log(err);
