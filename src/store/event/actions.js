@@ -7,6 +7,7 @@ export function updateEvents(context, value) {
 }
 
 export function getDatesMonth(context, { app, id, month, year }) {
+  app.$q.loading.show();
   app
     .$axios({
       method: "post",
@@ -25,6 +26,7 @@ export function getDatesMonth(context, { app, id, month, year }) {
         dates.push(event.date);
       });
       context.commit("updateDates", dates);
+      app.$q.loading.hide();
     })
     .catch(function(err) {
       console.log(err);
@@ -32,6 +34,7 @@ export function getDatesMonth(context, { app, id, month, year }) {
 }
 
 export function getEventsDay(context, { app, id, day, month, year }) {
+  app.$q.loading.show();
   app
     .$axios({
       method: "post",
@@ -47,6 +50,7 @@ export function getEventsDay(context, { app, id, day, month, year }) {
     })
     .then(response => {
       context.commit("updateEvents", response.data.events);
+      app.$q.loading.hide();
     })
     .catch(function(err) {
       console.log(err);
@@ -54,6 +58,7 @@ export function getEventsDay(context, { app, id, day, month, year }) {
 }
 
 export function deleteEvent(context, { app, id }) {
+  app.$q.loading.show();
   app
     .$axios({
       method: "post",
@@ -70,6 +75,7 @@ export function deleteEvent(context, { app, id }) {
         )
       );
       context.commit("updateDates", response.data.events);
+      app.$q.loading.hide();
     })
     .catch(function(err) {
       console.log(err);

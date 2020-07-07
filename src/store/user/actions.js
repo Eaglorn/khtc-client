@@ -10,6 +10,7 @@ export function updateAuth(context, value) {
 }
 
 export function auth(context, { app, login, password }) {
+  app.$q.loading.show();
   app
     .$axios({
       method: "post",
@@ -56,6 +57,7 @@ export function auth(context, { app, login, password }) {
           }
         }
       }
+      app.$q.loading.hide();
     })
     .catch(function(err) {
       console.log(err);

@@ -15,6 +15,7 @@ export function updateCalendarText(context, value) {
 }
 
 export function getCalendar(context, { app, id }) {
+  app.$q.loading.show();
   app
     .$axios({
       method: "post",
@@ -36,6 +37,7 @@ export function getCalendar(context, { app, id }) {
       if (app.$route.path !== "/calendar") {
         app.$router.push("/calendar");
       }
+      app.$q.loading.hide();
     })
     .catch(function(err) {
       console.log(err);
@@ -43,6 +45,7 @@ export function getCalendar(context, { app, id }) {
 }
 
 export function createCalendar(context, { app, login, password, title, text }) {
+  app.$q.loading.show();
   app
     .$axios({
       method: "post",
@@ -67,6 +70,7 @@ export function createCalendar(context, { app, login, password, title, text }) {
       if (app.$route.path !== "/calendar") {
         app.$router.push("/calendar");
       }
+      app.$q.loading.hide();
     })
     .catch(function(err) {
       console.log(err);
@@ -74,6 +78,7 @@ export function createCalendar(context, { app, login, password, title, text }) {
 }
 
 export function getCalendars(context, { app, login }) {
+  app.$q.loading.show();
   app
     .$axios({
       method: "post",
@@ -87,6 +92,7 @@ export function getCalendars(context, { app, login }) {
       if (app.$route.path !== "/calendars") {
         app.$router.push("/calendars");
       }
+      app.$q.loading.hide();
     })
     .catch(function(err) {
       console.log(err);
@@ -94,6 +100,7 @@ export function getCalendars(context, { app, login }) {
 }
 
 export function deleteCalendar(context, { app, id }) {
+  app.$q.loading.show();
   app
     .$axios({
       method: "post",
@@ -102,13 +109,14 @@ export function deleteCalendar(context, { app, id }) {
       timeout: 5000,
       responseType: "json"
     })
-    .then(response => {
+    .then(() => {
       context.commit(
         "updateCalendars",
         app.$store.state.calendar.calendars.filter(
           calendar => calendar.id !== id
         )
       );
+      app.$q.loading.hide();
     })
     .catch(function(err) {
       console.log(err);
@@ -116,6 +124,7 @@ export function deleteCalendar(context, { app, id }) {
 }
 
 export function editCalendar(context, { app, id, title, text }) {
+  app.$q.loading.show();
   app
     .$axios({
       method: "post",
@@ -128,7 +137,7 @@ export function editCalendar(context, { app, id, title, text }) {
       timeout: 5000,
       responseType: "json"
     })
-    .then(response => {
+    .then(() => {
       var items = app.$store.state.calendar.calendars.slice();
       items.forEach(function(item, i, items) {
         if (item.id === id) {
@@ -137,6 +146,7 @@ export function editCalendar(context, { app, id, title, text }) {
         }
       });
       context.commit("updateCalendars", items);
+      app.$q.loading.hide();
     })
     .catch(function(err) {
       console.log(err);
