@@ -3,35 +3,25 @@
     <q-toolbar>
       <q-breadcrumbs>
         <q-breadcrumbs-el label="Главная страница" to="/index" />
-        <q-breadcrumbs-el label="Календари" to="" v-on:click="calendars()" />
+        <q-breadcrumbs-el label="Календари" to v-on:click="calendars()" />
         <q-breadcrumbs-el :label="calendarTitle" />
       </q-breadcrumbs>
     </q-toolbar>
     <div class="row items-center">
       <div class="col-1"></div>
       <div class="col-3">
-        <div
-          class="q-pa-md"
-          style="max-width: 350px; height: 408px; padding: 16px;"
-        >
+        <div class="q-pa-md" style="max-width: 350px; height: 408px; padding: 16px;">
           <q-card flat bordered>
             <q-card-section>
-              <div class="text-h5" style="font-weight: bold;">
-                {{ calendarTitle }}
-              </div>
+              <div class="text-h5" style="font-weight: bold;">{{ calendarTitle }}</div>
             </q-card-section>
 
-            <q-card-section class="q-pt-none">
-              {{ calendarText }}
-            </q-card-section>
+            <q-card-section class="q-pt-none">{{ calendarText }}</q-card-section>
           </q-card>
         </div>
       </div>
       <div class="col-8">
-        <q-splitter
-          v-model="splitterModel"
-          style="height: 450px; width: 800px;"
-        >
+        <q-splitter v-model="splitterModel" style="height: 450px; width: 800px;">
           <template v-slot:before>
             <div class="q-pa-md">
               <q-date
@@ -51,9 +41,11 @@
                   <q-badge color="teal" :label="event.id" />
                 </q-item-section>
                 <q-item-section v-ripple>
-                  <q-item-label style="font-size: 24px;">{{
+                  <q-item-label style="font-size: 24px;">
+                    {{
                     event.title
-                  }}</q-item-label>
+                    }}
+                  </q-item-label>
                 </q-item-section>
                 <q-item-section side>
                   <q-fab
@@ -63,11 +55,7 @@
                     direction="right"
                     :hide-label="true"
                   >
-                    <q-fab-action
-                      :hide-label="true"
-                      color="warning"
-                      icon="edit"
-                    />
+                    <q-fab-action :hide-label="true" color="warning" icon="edit" />
                     <q-fab-action
                       :hide-label="true"
                       color="negative"
@@ -89,39 +77,21 @@
       icon="add"
       color="green"
       style="position: absolute; right: 40px; bottom: 60px"
-      v-on:click="createEvent()"
+      v-on:click="confirmCreateEvent()"
     />
     <q-dialog v-model="createConfirm" persistent>
       <q-card>
         <q-card-section class="row items-center">
           <q-avatar icon="calendar_today" color="green" text-color="white" />
-          <span class="q-ml-sm" style="font-size:16px"
-            >Создание нового события</span
-          >
+          <span class="q-ml-sm" style="font-size:16px">Создание нового события</span>
         </q-card-section>
         <q-card-section class="q-pt-none q-gutter-md" style="max-width: 300px">
-          <q-input
-            rounded
-            outlined
-            v-model="createEventTitle"
-            label="Название календаря"
-          />
-          <q-input
-            label="Описание календаря"
-            v-model="createEventText"
-            filled
-            type="textarea"
-          />
+          <q-input rounded outlined v-model="createEventTitle" label="Название календаря" />
+          <q-input label="Описание календаря" v-model="createEventText" filled type="textarea" />
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn
-            flat
-            label="Да"
-            color="green"
-            v-close-popup
-            v-on:click="createEvent()"
-          />
+          <q-btn flat label="Да" color="green" v-close-popup v-on:click="createEvent()" />
           <q-btn flat label="Нет" color="red" v-close-popup />
         </q-card-actions>
       </q-card>
@@ -130,19 +100,11 @@
       <q-card>
         <q-card-section class="row items-center">
           <q-avatar icon="delete" color="red" text-color="white" />
-          <span class="q-ml-sm" style="font-size:16px"
-            >Вы действительно хотите удалить это событие?</span
-          >
+          <span class="q-ml-sm" style="font-size:16px">Вы действительно хотите удалить это событие?</span>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn
-            flat
-            label="Да"
-            color="green"
-            v-close-popup
-            v-on:click="deleteEvent()"
-          />
+          <q-btn flat label="Да" color="green" v-close-popup v-on:click="deleteEvent()" />
           <q-btn flat label="Нет" color="red" v-close-popup />
         </q-card-actions>
       </q-card>
@@ -218,9 +180,10 @@ export default {
     createEvent() {
       this.$store.dispatch("event/createEvent", {
         app: this,
-        title: this.createCalendarTitle,
-        text: this.createCalendarText,
-        calendar: this.$store.state.calendar.calendar.id
+        title: this.createEventTitle,
+        text: this.createEventText,
+        calendar: this.$store.state.calendar.calendar.id,
+        date: this.date + date.formatDate(Date.now(), "HH:mm")
       });
     }
   },

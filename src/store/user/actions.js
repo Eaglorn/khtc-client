@@ -61,5 +61,6 @@ export function auth(context, { app, login, password }) {
     })
     .catch(function(err) {
       console.log(err);
+      app.$q.loading.hide();
     });
 }

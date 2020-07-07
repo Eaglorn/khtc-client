@@ -41,6 +41,7 @@ export function getCalendar(context, { app, id }) {
     })
     .catch(function(err) {
       console.log(err);
+      app.$q.loading.hide();
     });
 }
 
@@ -74,6 +75,7 @@ export function createCalendar(context, { app, login, password, title, text }) {
     })
     .catch(function(err) {
       console.log(err);
+      app.$q.loading.hide();
     });
 }
 
@@ -96,6 +98,7 @@ export function getCalendars(context, { app, login }) {
     })
     .catch(function(err) {
       console.log(err);
+      app.$q.loading.hide();
     });
 }
 
@@ -120,6 +123,7 @@ export function deleteCalendar(context, { app, id }) {
     })
     .catch(function(err) {
       console.log(err);
+      app.$q.loading.hide();
     });
 }
 
@@ -150,5 +154,6 @@ export function editCalendar(context, { app, id, title, text }) {
     })
     .catch(function(err) {
       console.log(err);
+      app.$q.loading.hide();
     });
 }
