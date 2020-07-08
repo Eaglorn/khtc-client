@@ -2,7 +2,7 @@
   <!-- <q-page class="flex flex-center">-->
   <q-page style="padding:10px;">
     <!-- <img src="~assets/logo.png" alt="ХТК Лого" width="250px" /> -->
-    <q-file color="lime-11" bg-color="green-3" filled v-model="model" @input="fileLoad">
+    <q-file bg-color="green-2" filled v-model="model" @input="fileLoad">
       <template v-slot:prepend>
         <q-icon name="attachment" />
       </template>
@@ -196,6 +196,33 @@ export default {
       data: []
     };
   },
+  created() {
+    if (this.$q.localStorage.getItem("data") != null) {
+      this.data = this.$q.localStorage.getItem("data");
+    } else {
+      this.data = [];
+    }
+    if (this.$q.localStorage.getItem("visibleColumns") != null) {
+      this.visibleColumns = this.$q.localStorage.getItem("visibleColumns");
+    } else {
+      this.visibleColumns = [
+        "name1",
+        "name2",
+        "name3",
+        "name4",
+        "name5",
+        "name6",
+        "name7",
+        "name8",
+        "name9",
+        "name10",
+        "name11",
+        "name12",
+        "name13"
+      ];
+      this.$q.localStorage.set("visibleColumns", this.visibleColumns);
+    }
+  },
   methods: {
     fileLoad() {
       const formData = new FormData();
@@ -258,6 +285,7 @@ export default {
             ];
             this.$q.localStorage.set("visibleColumns", this.visibleColumns);
           }
+          this.$q.localStorage.set("data", this.data);
         })
         .catch(function(err) {
           console.log(err);
