@@ -1,6 +1,6 @@
 <template>
   <!-- <q-page class="flex flex-center">-->
-  <q-page style="padding-top:5px;padding-left:5px;padding-right:5px;font-size:20px!iportant;">
+  <q-page style="padding:10px;">
     <!-- <img src="~assets/logo.png" alt="ХТК Лого" width="250px" /> -->
     <q-file color="lime-11" bg-color="green-3" filled v-model="model" @input="fileLoad">
       <template v-slot:prepend>
@@ -21,14 +21,12 @@
     >
       <template v-slot:top="props">
         <div class="col-2 q-table__title">Платёжки</div>
-
         <q-space />
-
         <div v-if="$q.screen.gt.xs" class="col">
           <q-toggle
             v-model="visibleColumns"
             val="name1"
-            label="name1"
+            label="Дата"
             @input="visibleEdit"
             color="light-blue-2"
           />
@@ -63,21 +61,21 @@
           <q-toggle
             v-model="visibleColumns"
             val="name6"
-            label="name6"
+            label="Платильщик"
             @input="visibleEdit"
             color="light-blue-2"
           />
           <q-toggle
             v-model="visibleColumns"
             val="name7"
-            label="name7"
+            label="Проживающий"
             @input="visibleEdit"
             color="light-blue-2"
           />
           <q-toggle
             v-model="visibleColumns"
             val="name8"
-            label="name8"
+            label="Назначение платежа"
             @input="visibleEdit"
             color="light-blue-2"
           />
@@ -91,21 +89,21 @@
           <q-toggle
             v-model="visibleColumns"
             val="name10"
-            label="name13"
+            label="КБК"
             @input="visibleEdit"
             color="light-blue-2"
           />
           <q-toggle
             v-model="visibleColumns"
             val="name11"
-            label="name11"
+            label="Сумма"
             @input="visibleEdit"
             color="light-blue-2"
           />
           <q-toggle
             v-model="visibleColumns"
             val="name12"
-            label="name12"
+            label="Сумма"
             @input="visibleEdit"
             color="light-blue-2"
           />
@@ -140,6 +138,16 @@
           class="q-ml-md"
         />
       </template>
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th
+            v-for="col in props.cols"
+            :key="col.name"
+            :props="props"
+            style="font-weight:bolder;font-size:14px;"
+          >{{ col.label }}</q-th>
+        </q-tr>
+      </template>
     </q-table>
   </q-page>
 </template>
@@ -166,18 +174,23 @@ export default {
         "name13"
       ],
       columns: [
-        { name: "name1", label: "name1", field: "name1", align: "left" },
+        { name: "name1", label: "Дата", field: "name1", align: "left" },
         { name: "name2", label: "name2", field: "name2", align: "left" },
         { name: "name3", label: "name3", field: "name3", align: "left" },
         { name: "name4", label: "name4", field: "name4", align: "left" },
         { name: "name5", label: "name5", field: "name5", align: "left" },
-        { name: "name6", label: "name6", field: "name6", align: "left" },
-        { name: "name7", label: "name7", field: "name7", align: "left" },
-        { name: "name8", label: "name8", field: "name8", align: "left" },
+        { name: "name6", label: "Платильщик", field: "name6", align: "left" },
+        { name: "name7", label: "Проживающий", field: "name7", align: "left" },
+        {
+          name: "name8",
+          label: "Назначение платежа",
+          field: "name8",
+          align: "left"
+        },
         { name: "name9", label: "name9", field: "name9", align: "left" },
-        { name: "name10", label: "name10", field: "name10", align: "left" },
-        { name: "name11", label: "name11", field: "name11", align: "left" },
-        { name: "name12", label: "name12", field: "name12", align: "left" },
+        { name: "name10", label: "КБК", field: "name10", align: "left" },
+        { name: "name11", label: "Сумма", field: "name11", align: "left" },
+        { name: "name12", label: "Сумма", field: "name12", align: "left" },
         { name: "name13", label: "name13", field: "name13", align: "left" }
       ],
       data: []
