@@ -7,21 +7,62 @@
         <q-icon name="attachment" />
       </template>
     </q-file>
-    <br><br>
+    <br />
+    <br />
     <q-table
-      class="sticky-virtscroll-table shadow-box shadow-5"
-      virtual-scroll
-      :pagination.sync="pagination"
-      :rows-per-page-options="[0]"
-      :virtual-scroll-sticky-size-start="48"
-      row-key="index"
+      class="shadow-box shadow-5"
       title="Платёжки"
       :data="data"
       :columns="columns"
       hide-bottom
       separator="cell"
+      :visible-columns="visibleColumns"
       v-if="data.length != 0"
-    />
+    >
+      <template v-slot:top="props">
+        <div class="col-2 q-table__title">Treats</div>
+
+        <q-space />
+
+        <div v-if="$q.screen.gt.xs" class="col">
+          <q-toggle v-model="visibleColumns" val="name1" label="name1" />
+          <q-toggle v-model="visibleColumns" val="name2" label="name2" />
+          <q-toggle v-model="visibleColumns" val="name3" label="name3" />
+          <q-toggle v-model="visibleColumns" val="name4" label="name4" />
+          <q-toggle v-model="visibleColumns" val="name5" label="name5" />
+          <q-toggle v-model="visibleColumns" val="name6" label="name6" />
+          <q-toggle v-model="visibleColumns" val="name7" label="name7" />
+          <q-toggle v-model="visibleColumns" val="name8" label="name8" />
+          <q-toggle v-model="visibleColumns" val="name9" label="name9" />
+          <q-toggle v-model="visibleColumns" val="name10" label="name13" />
+          <q-toggle v-model="visibleColumns" val="name11" label="name11" />
+          <q-toggle v-model="visibleColumns" val="name12" label="name12" />
+          <q-toggle v-model="visibleColumns" val="name13" label="name13" />
+        </div>
+        <q-select
+          v-else
+          v-model="visibleColumns"
+          multiple
+          borderless
+          dense
+          options-dense
+          :display-value="$q.lang.table.columns"
+          emit-value
+          map-options
+          :options="columns"
+          style="min-width: 150px"
+        />
+
+        <q-btn
+          flat
+          round
+          dense
+          :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+          @click="props.toggleFullscreen"
+          class="q-ml-md"
+        />
+      </template>
+    </q-table>
   </q-page>
 </template>
 
@@ -31,9 +72,6 @@ export default {
     return {
       model: null,
       text: "",
-      pagination: {
-        rowsPerPage: 0
-      },
       columns: [
         { name: "name1", label: "name1", field: "name1", align: "left" },
         { name: "name2", label: "name2", field: "name2", align: "left" },
@@ -97,23 +135,35 @@ export default {
           console.log(err);
         });
     }
+  },
+  computed: {
+    visibleColumns: {
+      get() {
+        console.log(this.$q.cookies);
+        if (this.$q.cookies.get("visibleColumns") === null) {
+          return [
+            "name1",
+            "name2",
+            "name3",
+            "name4",
+            "name5",
+            "name6",
+            "name7",
+            "name8",
+            "name9",
+            "name10",
+            "name11",
+            "name12",
+            "name13"
+          ];
+        } else {
+          return this.$q.cookies.get("visibleColumns");
+        }
+      },
+      set(val) {
+        this.$q.cookies.set("visibleColumns", val, { expires: 99999 });
+      }
+    }
   }
 };
 </script>
-
-<style lang="sass">
-.sticky-virtscroll-table
-  max-height: 625px
-  min-height: 200px
-  .q-table__top,
-  .q-table__bottom,
-  thead tr:first-child th
-    background-color: #fff
-  thead tr th
-    position: sticky
-    z-index: 1
-  thead tr:last-child th
-    top: 48px
-  thead tr:first-child th
-    top: 0
-</style>
