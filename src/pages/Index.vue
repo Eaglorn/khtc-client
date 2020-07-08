@@ -1,14 +1,27 @@
 <template>
   <!-- <q-page class="flex flex-center">-->
-  <q-page>
+  <q-page style="padding-top:5px;padding-left:5px;padding-right:5px;font-size:20px!iportant;">
     <!-- <img src="~assets/logo.png" alt="ХТК Лого" width="250px" /> -->
-    <q-file color="lime-11" bg-color="green" filled v-model="model" @input="fileLoad">
+    <q-file color="lime-11" bg-color="green-3" filled v-model="model" @input="fileLoad">
       <template v-slot:prepend>
         <q-icon name="attachment" />
       </template>
     </q-file>
-    <q-table title="Treats" :data="data" :columns="columns" />
-    <div>{{this.text}}</div>
+    <br><br>
+    <q-table
+      class="sticky-virtscroll-table shadow-box shadow-5"
+      virtual-scroll
+      :pagination.sync="pagination"
+      :rows-per-page-options="[0]"
+      :virtual-scroll-sticky-size-start="48"
+      row-key="index"
+      title="Платёжки"
+      :data="data"
+      :columns="columns"
+      hide-bottom
+      separator="cell"
+      v-if="data.length != 0"
+    />
   </q-page>
 </template>
 
@@ -18,6 +31,9 @@ export default {
     return {
       model: null,
       text: "",
+      pagination: {
+        rowsPerPage: 0
+      },
       columns: [
         { name: "name1", label: "name1", field: "name1", align: "left" },
         { name: "name2", label: "name2", field: "name2", align: "left" },
@@ -71,6 +87,10 @@ export default {
             item.name13 = valueCell[12];
             dataResponse.push(item);
           });
+          dataResponse.forEach((row, index) => {
+            row.index = index;
+          });
+          Object.freeze(dataResponse);
           this.data = dataResponse;
         })
         .catch(function(err) {
@@ -80,3 +100,20 @@ export default {
   }
 };
 </script>
+
+<style lang="sass">
+.sticky-virtscroll-table
+  max-height: 625px
+  min-height: 200px
+  .q-table__top,
+  .q-table__bottom,
+  thead tr:first-child th
+    background-color: #fff
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:last-child th
+    top: 48px
+  thead tr:first-child th
+    top: 0
+</style>
