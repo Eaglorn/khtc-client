@@ -17,7 +17,7 @@ import iconSet from 'quasar/icon-set/material-icons'
 
 import Vue from 'vue'
 
-import {Quasar,Ripple,ClosePopup,Notify,Cookies,Loading} from 'quasar'
+import {Quasar,Ripple,ClosePopup,Notify,Cookies,LocalStorage,SessionStorage,Loading} from 'quasar'
 
 
-Vue.use(Quasar, { config: {"notify":{},"loading":{}},lang: lang,iconSet: iconSet,directives: {Ripple,ClosePopup},plugins: {Notify,Cookies,Loading} })
+Vue.use(Quasar, { config: {"notify":{},"loading":{}},lang: lang,iconSet: iconSet,directives: {Ripple,ClosePopup},plugins: {Notify,Cookies,LocalStorage,SessionStorage,Loading} })

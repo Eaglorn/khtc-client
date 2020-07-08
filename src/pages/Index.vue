@@ -20,24 +20,102 @@
       v-if="data.length != 0"
     >
       <template v-slot:top="props">
-        <div class="col-2 q-table__title">Treats</div>
+        <div class="col-2 q-table__title">Платёжки</div>
 
         <q-space />
 
         <div v-if="$q.screen.gt.xs" class="col">
-          <q-toggle v-model="visibleColumns" val="name1" label="name1" />
-          <q-toggle v-model="visibleColumns" val="name2" label="name2" />
-          <q-toggle v-model="visibleColumns" val="name3" label="name3" />
-          <q-toggle v-model="visibleColumns" val="name4" label="name4" />
-          <q-toggle v-model="visibleColumns" val="name5" label="name5" />
-          <q-toggle v-model="visibleColumns" val="name6" label="name6" />
-          <q-toggle v-model="visibleColumns" val="name7" label="name7" />
-          <q-toggle v-model="visibleColumns" val="name8" label="name8" />
-          <q-toggle v-model="visibleColumns" val="name9" label="name9" />
-          <q-toggle v-model="visibleColumns" val="name10" label="name13" />
-          <q-toggle v-model="visibleColumns" val="name11" label="name11" />
-          <q-toggle v-model="visibleColumns" val="name12" label="name12" />
-          <q-toggle v-model="visibleColumns" val="name13" label="name13" />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name1"
+            label="name1"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name2"
+            label="name2"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name3"
+            label="name3"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name4"
+            label="name4"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name5"
+            label="name5"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name6"
+            label="name6"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name7"
+            label="name7"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name8"
+            label="name8"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name9"
+            label="name9"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name10"
+            label="name13"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name11"
+            label="name11"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name12"
+            label="name12"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
+          <q-toggle
+            v-model="visibleColumns"
+            val="name13"
+            label="name13"
+            @input="visibleEdit"
+            color="light-blue-2"
+          />
         </div>
         <q-select
           v-else
@@ -72,6 +150,21 @@ export default {
     return {
       model: null,
       text: "",
+      visibleColumns: [
+        "name1",
+        "name2",
+        "name3",
+        "name4",
+        "name5",
+        "name6",
+        "name7",
+        "name8",
+        "name9",
+        "name10",
+        "name11",
+        "name12",
+        "name13"
+      ],
       columns: [
         { name: "name1", label: "name1", field: "name1", align: "left" },
         { name: "name2", label: "name2", field: "name2", align: "left" },
@@ -130,39 +223,35 @@ export default {
           });
           Object.freeze(dataResponse);
           this.data = dataResponse;
+          if (this.$q.localStorage.getItem("visibleColumns") != null) {
+            this.visibleColumns = this.$q.localStorage.getItem(
+              "visibleColumns"
+            );
+          } else {
+            this.visibleColumns = [
+              "name1",
+              "name2",
+              "name3",
+              "name4",
+              "name5",
+              "name6",
+              "name7",
+              "name8",
+              "name9",
+              "name10",
+              "name11",
+              "name12",
+              "name13"
+            ];
+            this.$q.localStorage.set("visibleColumns", this.visibleColumns);
+          }
         })
         .catch(function(err) {
           console.log(err);
         });
-    }
-  },
-  computed: {
-    visibleColumns: {
-      get() {
-        console.log(this.$q.cookies);
-        if (this.$q.cookies.get("visibleColumns") === null) {
-          return [
-            "name1",
-            "name2",
-            "name3",
-            "name4",
-            "name5",
-            "name6",
-            "name7",
-            "name8",
-            "name9",
-            "name10",
-            "name11",
-            "name12",
-            "name13"
-          ];
-        } else {
-          return this.$q.cookies.get("visibleColumns");
-        }
-      },
-      set(val) {
-        this.$q.cookies.set("visibleColumns", val, { expires: 99999 });
-      }
+    },
+    visibleEdit() {
+      this.$q.localStorage.set("visibleColumns", this.visibleColumns);
     }
   }
 };

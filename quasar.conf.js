@@ -33,7 +33,7 @@ module.exports = function(ctx) {
 
       directives: ["Ripple", "ClosePopup"],
 
-      plugins: ["Notify", "Cookies", "Loading"],
+      plugins: ["Notify", "Cookies", "LocalStorage", "SessionStorage", "Loading"],
 
       config: {
         notify: {},
