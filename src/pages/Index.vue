@@ -88,8 +88,8 @@ export default {
         { name: "name3", label: "name3", field: "name3", align: "left" },
         { name: "name4", label: "name4", field: "name4", align: "left" },
         { name: "name5", label: "name5", field: "name5", align: "left" },
-        { name: "name6", label: "Платильщик", field: "name6", align: "left" },
-        { name: "name7", label: "Проживающий", field: "name7", align: "left" },
+        { name: "name6", label: "Кто", field: "name6", align: "left" },
+        { name: "name7", label: "За кого", field: "name7", align: "left" },
         {
           name: "name8",
           label: "Назначение платежа",
@@ -98,8 +98,8 @@ export default {
         },
         { name: "name9", label: "name9", field: "name9", align: "left" },
         { name: "name10", label: "КБК", field: "name10", align: "left" },
-        { name: "name11", label: "Сумма", field: "name11", align: "left" },
-        { name: "name12", label: "Сумма", field: "name12", align: "left" },
+        { name: "name11", label: "Сумма1", field: "name11", align: "left" },
+        { name: "name12", label: "Сумма2", field: "name12", align: "left" },
         { name: "name13", label: "name13", field: "name13", align: "left" }
       ],
       data: []

@@ -12,23 +12,23 @@
   "dependencies": {
     "@quasar/extras": "^1.8.2",
     "axios": "^0.19.2",
-    "core-js": "^3.0.0",
+    "core-js": "^3.6.5",
     "quasar": "^1.12.8",
     "socket.io-client": "^2.3.0",
     "vue-socket.io": "^3.0.9",
     "vue-socket.io-extended": "^4.0.3"
   },
   "devDependencies": {
-    "@quasar/app": "^2.0.1",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-loader": "^3.0.3",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^6.1.2"
+    "@quasar/app": "^2.0.3",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.4.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^6.2.2"
   },
   "engines": {
     "node": ">= 10.18.1",
