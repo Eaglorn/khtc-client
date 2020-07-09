@@ -14,138 +14,46 @@
       title="Платёжки"
       :data="data"
       :columns="columns"
+      row-key="index"
+      selection="single"
+      :selected.sync="selected"
       hide-bottom
       separator="cell"
       :visible-columns="visibleColumns"
       v-if="data.length != 0"
+      v-on:click="selectedEdit"
     >
-      <template v-slot:top="props">
+      <template v-slot:top>
         <div class="col-2 q-table__title">Платёжки</div>
         <q-space />
-        <div v-if="$q.screen.gt.xs" class="col">
-          <q-toggle
-            v-model="visibleColumns"
-            val="name1"
-            label="Дата"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name2"
-            label="name2"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name3"
-            label="name3"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name4"
-            label="name4"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name5"
-            label="name5"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name6"
-            label="Платильщик"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name7"
-            label="Проживающий"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name8"
-            label="Назначение платежа"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name9"
-            label="name9"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name10"
-            label="КБК"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name11"
-            label="Сумма"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name12"
-            label="Сумма"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-          <q-toggle
-            v-model="visibleColumns"
-            val="name13"
-            label="name13"
-            @input="visibleEdit"
-            color="light-blue-2"
-          />
-        </div>
         <q-select
-          v-else
           v-model="visibleColumns"
           multiple
-          borderless
+          outlined
           dense
           options-dense
           :display-value="$q.lang.table.columns"
           emit-value
           map-options
           :options="columns"
+          option-value="name"
+          options-cover
           style="min-width: 150px"
-        />
-
-        <q-btn
-          flat
-          round
-          dense
-          :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
-          @click="props.toggleFullscreen"
-          class="q-ml-md"
+          @input="visibleEdit"
         />
       </template>
       <template v-slot:header="props">
         <q-tr :props="props">
-          <q-th
-            v-for="col in props.cols"
-            :key="col.name"
-            :props="props"
-            style="font-weight:bolder;font-size:14px;"
-          >{{ col.label }}</q-th>
+          <q-th></q-th>
+          <q-th v-for="col in props.cols" :key="col.name" :props="props">{{ col.label }}</q-th>
+        </q-tr>
+      </template>
+      <template v-slot:body="props">
+        <q-tr :props="props" :style="props.selected ? 'font-weight:bolder;' : ''">
+          <q-td>
+            <q-checkbox dense v-model="props.selected" />
+          </q-td>
+          <q-td v-for="col in props.cols" :key="col.name" :props="props">{{ col.value }}</q-td>
         </q-tr>
       </template>
     </q-table>
@@ -158,6 +66,7 @@ export default {
     return {
       model: null,
       text: "",
+      selected: [],
       visibleColumns: [
         "name1",
         "name2",
@@ -243,6 +152,7 @@ export default {
           valueRows.forEach(function(row, i, rows) {
             var item = {};
             var valueCell = row.split(";");
+            item.index = i;
             item.name1 = valueCell[0];
             item.name2 = valueCell[1];
             item.name3 = valueCell[2];
