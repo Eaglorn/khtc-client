@@ -10,18 +10,18 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.8.2",
+    "@quasar/extras": "^1.9.3",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
-    "quasar": "^1.12.8",
+    "quasar": "^1.12.13",
     "socket.io-client": "^2.3.0",
-    "vue-socket.io": "^3.0.9",
-    "vue-socket.io-extended": "^4.0.3"
+    "vue-socket.io": "^3.0.10",
+    "vue-socket.io-extended": "^4.0.4"
   },
   "devDependencies": {
-    "@quasar/app": "^2.0.3",
+    "@quasar/app": "^2.0.6",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.4.0",
+    "eslint": "^7.5.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.22.0",
