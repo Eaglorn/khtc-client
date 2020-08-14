@@ -1,4 +1,4 @@
-# KHTC (khtc)
+# KHTC (khtc-client)
 
 Education App
 
