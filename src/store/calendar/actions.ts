@@ -1,8 +1,8 @@
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import { CalendarStateInterface } from './state';
-import { Loading } from 'quasar';
-import axios from 'axios'
+import { Loading, Cookies, Notify } from 'quasar';
+import axios from 'axios';
 
 const actions: ActionTree<CalendarStateInterface, StateInterface> = {
   updateCalendar(context, value) {

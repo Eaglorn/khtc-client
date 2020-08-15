@@ -13,7 +13,7 @@ const actions: ActionTree<EventStateInterface, StateInterface> = {
     context.commit('updateEvents', value);
   },
 
-  getDatesMonth(context, { app, id, month, year }) {
+  getDatesMonth(context, { id, month, year }) {
     Loading.show();
     axios({
       method: 'post',
