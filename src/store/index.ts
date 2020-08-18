@@ -4,6 +4,12 @@ import Vuex from 'vuex';
 import user from './user';
 import { UserStateInterface } from './user/state';
 
+import calendar from './user';
+import { CalendarStateInterface } from './calendar/state';
+
+import event from './user';
+import { EventStateInterface } from './event/state';
+
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation
@@ -14,6 +20,8 @@ export interface StateInterface {
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   user: UserStateInterface;
+  calendar: CalendarStateInterface;
+  event: EventStateInterface;
 }
 
 export default store(function ({ Vue }) {
@@ -21,7 +29,9 @@ export default store(function ({ Vue }) {
 
   const Store = new Vuex.Store<StateInterface>({
     modules: {
-      user
+      user,
+      calendar,
+      event
     },
 
     // enable strict mode (adds overhead!)

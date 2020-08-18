@@ -1,27 +1,29 @@
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
-import { CalendarStateInterface } from './state';
+import { CalendarStateInterface, CalendarInterface } from './state';
 import { Loading, Cookies, Notify } from 'quasar';
 import axios from 'axios';
+import { EventInterface } from '../event/state'
+import { SetupContext } from '@vue/composition-api';
 
 const actions: ActionTree<CalendarStateInterface, StateInterface> = {
   updateCalendar(context, value) {
-    context.commit('updateCalendar', value);
+    this.commit('updateCalendar', value);
   },
 
   updateCalendars(context, value) {
-    context.commit('updateCalendars', value);
+    this.commit('updateCalendars', value);
   },
 
   updateCalendarTitle(context, value) {
-    context.commit('updateCalendarTitle', value);
+    this.commit('updateCalendarTitle', value);
   },
 
   updateCalendarText(context, value) {
-    context.commit('updateCalendarText', value);
+    this.commit('updateCalendarText', value);
   },
 
-  getCalendar(context, id: number ) {
+  getCalendar(context, { app, id }: { app: SetupContext, id : number }) {
     Loading.show();
       axios({
         method: 'post',
@@ -31,17 +33,17 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
         responseType: 'json'
       })
       .then(response => {
-        const items = [];
-        response.data.dates.forEach(event => {
+        const items: string[] = [];
+        for (const event of (<{dates: [{ date:string }]}> response.data).dates) {
           items.push(event.date);
-        });
-        context.commit('updateCalendar', response.data.calendar);
-        context.commit('updateCalendarTitle', response.data.calendar.title);
-        context.commit('updateCalendarText', response.data.calendar.text);
-        app.$store.dispatch('event/updateDates', items);
-        app.$store.dispatch('event/updateEvents', response.data.events);
-        if (app.$route.path !== '/calendar') {
-          app.$router.push('/calendar');
+        }
+        this.commit('updateCalendar', (<{calendar: CalendarInterface}> response.data).calendar);
+        this.commit('updateCalendarTitle', (<{calendar: CalendarInterface}> response.data).calendar.title);
+        this.commit('updateCalendarText', (<{calendar: CalendarInterface}> response.data).calendar.text);
+        void this.dispatch('event/updateDates', items);
+        void this.dispatch('event/updateEvents', (<{events: EventInterface}>response.data).events);
+        if (app.root.$route.path !== '/calendar') {
+          void app.root.$router.push('/calendar');
         }
         Loading.hide();
       })
@@ -53,8 +55,7 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
 
   getCalendars(context, { app, login }) {
     Loading.show();
-    app
-      .$axios({
+    axios({
         method: 'post',
         url: 'http://46.8.146.12:4000/api/user/calendars',
         data: { login: login },
@@ -76,8 +77,7 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
 
   deleteCalendar(context, { app, id }) {
     Loading.show();
-    app
-      .$axios({
+    axios({
         method: 'post',
         url: 'http://46.8.146.12:4000/api/user/calendar/delete',
         data: { id: id },
@@ -101,8 +101,7 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
 
   editCalendar(context, { app, id, title, text }) {
     Loading.show();
-    app
-      .$axios({
+    axios({
         method: 'post',
         url: 'http://46.8.146.12:4000/api/user/calendar/edit',
         data: {

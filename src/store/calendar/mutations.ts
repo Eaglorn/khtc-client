@@ -1,9 +1,9 @@
 import { MutationTree } from 'vuex';
 import { CalendarStateInterface } from './state';
-import { CalendarCalendarStateInterface } from './state';
+import { CalendarInterface } from './state';
 
 const mutation: MutationTree<CalendarStateInterface> = {
-  updateCalendar (state, value: CalendarCalendarStateInterface) {
+  updateCalendar (state, value: CalendarInterface) {
     state.calendar = value;
   },
 

@@ -40,8 +40,6 @@ import qboot_Bootaxios from 'boot/axios'
 
 
 
-import { addPreFetchHooks } from './client-prefetch.js'
-
 
 
 
@@ -114,8 +112,6 @@ async function start () {
 
   
 
-    
-    addPreFetchHooks(router, store)
     
 
     

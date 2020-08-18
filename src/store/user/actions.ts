@@ -6,13 +6,13 @@ import axios from 'axios';
 import { SetupContext } from '@vue/composition-api';
 
 const actions: ActionTree<UserStateInterface, StateInterface> = {
-  exit(context) {
-    context.commit('updateAuth', false);
+  exit() {
+    this.commit('updateAuth', false);
     Cookies.remove('login');
     Cookies.remove('password');
   },
   updateAuth(context, value) {
-    context.commit('updateAuth', value);
+    this.commit('updateAuth', value);
   },
   auth(context, { app, login, password }: { app: SetupContext, login : string, password : string }) {
     Loading.show();
@@ -40,14 +40,14 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
               icon: 'report_problem'
             });
           } else {
-            context.commit('updateAuth', true);
-            context.commit('updateLogin', login);
+            this.commit('updateAuth', true);
+            this.commit('updateLogin', login);
             try {
               Cookies.set('login', login, { expires: 3 });
             } catch (e) {
               console.log(e);
             }
-            context.commit('updatePassword', password);
+            this.commit('updatePassword', password);
             try {
               Cookies.set('password', password, {
                 expires: 3
