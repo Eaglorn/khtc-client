@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import { CalendarStateInterface, CalendarInterface } from './state';
-import { Loading, Cookies, Notify } from 'quasar';
+import { Loading } from 'quasar';
 import axios from 'axios';
 import { EventInterface } from '../event/state'
 import { SetupContext } from '@vue/composition-api';

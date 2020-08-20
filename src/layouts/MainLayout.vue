@@ -71,16 +71,15 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from '@vue/composition-api';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Store } from 'vuex';
 import { UserStateInterface } from '../store/user/state';
+
+let drawer = ref(false);
+let miniState = ref(true);
 
 export default defineComponent({
   name: 'MyLayout',
   setup(props, context) {
     const store = context.root.$store;
-    let drawer = ref(false);
-    let miniState = ref(true);
 
     console.log(store.getters);
 
