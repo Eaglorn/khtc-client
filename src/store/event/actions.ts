@@ -1,6 +1,6 @@
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
-import { EventStateInterface } from './state';
+import { EventStateInterface, EventInterface } from './state';
 import { Loading } from 'quasar';
 import axios from 'axios';
 
@@ -13,7 +13,7 @@ const actions: ActionTree<EventStateInterface, StateInterface> = {
     context.commit('updateEvents', value);
   },
 
-  getDatesMonth(context, { id, month, year }) {
+  getDatesMonth(context, { id, month, year } : {id: number, month: number, year: number}) {
     Loading.show();
     axios({
       method: 'post',
@@ -27,8 +27,8 @@ const actions: ActionTree<EventStateInterface, StateInterface> = {
       responseType: 'json'
     })
       .then(response => {
-        const dates = [];
-        response.data.events.forEach(event => {
+        const dates: string[] = [];
+        (<{events: EventInterface[]}> response.data).events.forEach(event => {
           dates.push(event.date);
         });
         context.commit('updateDates', dates);
@@ -40,7 +40,7 @@ const actions: ActionTree<EventStateInterface, StateInterface> = {
       });
   },
 
-  getEventsDay(context, { app, id, day, month, year }) {
+  getEventsDay(context, { id, day, month, year } : {id: number, day: number, month: number, year: number}) {
     Loading.show();
     axios({
       method: 'post',
@@ -55,7 +55,7 @@ const actions: ActionTree<EventStateInterface, StateInterface> = {
       responseType: 'json'
     })
       .then(response => {
-        context.commit('updateEvents', response.data.events);
+        context.commit('updateEvents', (<{events: EventInterface[]}> response.data).events);
         Loading.hide();
       })
       .catch(function(err) {
@@ -64,7 +64,7 @@ const actions: ActionTree<EventStateInterface, StateInterface> = {
       });
   },
 
-  deleteEvent(context, { app, id }) {
+  deleteEvent(context, { id } : { id: number }) {
     Loading.show();
     axios({
       method: 'post',
@@ -76,9 +76,9 @@ const actions: ActionTree<EventStateInterface, StateInterface> = {
       .then(response => {
         context.commit(
           'updateEvents',
-          app.$store.state.event.events.filter(event => event.id !== id)
+          context.state.events.filter(event => event.id !== id)
         );
-        context.commit('updateDates', response.data.dates);
+        context.commit('updateDates', (<{dates: string[]}> response.data).dates);
         Loading.hide();
       })
       .catch(function(err) {
@@ -87,7 +87,7 @@ const actions: ActionTree<EventStateInterface, StateInterface> = {
       });
   },
 
-  createEvent(context, { app, title, text, calendar, date }) {
+  createEvent(context, { title, text, calendar, date } : { title: string, text: string, calendar: number, date: string }) {
     Loading.show();
     axios({
       method: 'post',
@@ -99,21 +99,21 @@ const actions: ActionTree<EventStateInterface, StateInterface> = {
       .then(response => {
         date = date.substring(0, date.length - 5);
         context.commit('pushEvent', {
-          id: response.data.id,
+          id: (<{id: number}> response.data).id,
           title: title,
           text: text,
           calendar: calendar,
           date: date
         });
         let isData = false;
-        app.$store.state.event.dates.forEach(storeDate => {
+        context.state.dates.forEach(storeDate => {
           if (storeDate === date) {
             isData = true;
           }
         });
         if (!isData) {
           const dates = [];
-          app.$store.state.event.dates.forEach(storeDate => {
+          context.state.dates.forEach(storeDate => {
             dates.push(storeDate);
           });
           dates.push(date);

@@ -53,7 +53,7 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
       });
   },
 
-  getCalendars(context, { app, login }) {
+  getCalendars(context, { app, login } : {app: SetupContext, login: string}) {
     Loading.show();
     axios({
         method: 'post',
@@ -63,9 +63,9 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
         responseType: 'json'
       })
       .then(response => {
-        context.commit('updateCalendars', response.data.calendars);
-        if (app.$route.path !== '/calendars') {
-          app.$router.push('/calendars');
+        context.commit('updateCalendars', (<{calendars: CalendarInterface[]}> response.data).calendars);
+        if (app.root.$route.path !== '/calendars') {
+          void app.root.$router.push('/calendars');
         }
         Loading.hide();
       })
@@ -75,7 +75,7 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
       });
   },
 
-  deleteCalendar(context, { app, id }) {
+  deleteCalendar(context, {id } : {id: number}) {
     Loading.show();
     axios({
         method: 'post',
@@ -87,7 +87,7 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
       .then(() => {
         context.commit(
           'updateCalendars',
-          app.$store.state.calendar.calendars.filter(
+          context.state.calendars.filter(
             calendar => calendar.id !== id
           )
         );
@@ -99,7 +99,7 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
       });
   },
 
-  editCalendar(context, { app, id, title, text }) {
+  editCalendar(context, { id, title, text } : {id: number, title: string, text: string}) {
     Loading.show();
     axios({
         method: 'post',
@@ -113,8 +113,8 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
         responseType: 'json'
       })
       .then(() => {
-        const items = app.$store.state.calendar.calendars.slice();
-        items.forEach(function(item, i, items) {
+        const items = context.state.calendars.slice();
+        items.forEach(function(item) {
           if (item.id === id) {
             item.title = title;
             item.text = text;
