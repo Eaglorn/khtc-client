@@ -177,8 +177,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from '@vue/composition-api';
-import { CalendarStateInterface } from '../store/calendar/state';
-import { UserStateInterface } from '../store/user/state';
+import { StateInterface } from '../store';
 
 let createConfirm = ref(false);
 let deleteConfirm = ref(false);
@@ -207,8 +206,7 @@ export default defineComponent({
     function createCalendar() {
       void context.root.$store.dispatch('calendar/createCalendar', {
         app: context,
-        login: (<{ user: UserStateInterface }>context.root.$store.state).user
-          .login,
+        login: (<StateInterface>context.root.$store.state).user.login,
         title: createCalendarTitle,
         text: createCalendarText
       });
@@ -237,16 +235,12 @@ export default defineComponent({
         text: editCalendarText.value
       });
     }
-    const calendars = computed({
-      get: () =>
-        (<{ calendar: CalendarStateInterface }>context.root.$store.state)
-          .calendar.calendars,
-      set: val => {
-        context.root.$store.commit('calendar/updateCalendars', val);
-      }
-    });
+    const calendars = computed(
+      () => (<StateInterface>context.root.$store.state).calendar.calendars
+    );
 
     return {
+      context,
       createConfirm,
       editConfirm,
       deleteConfirm,
@@ -259,7 +253,9 @@ export default defineComponent({
       createCalendar,
       editCalendar,
       deleteCalendar,
-      calendars
+      editCalendarTitle,
+      editCalendarText,
+      calendars,
     };
   }
 });

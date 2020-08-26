@@ -2,14 +2,15 @@
   <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
+        <!--<q-btn
           v-if="auth"
           flat
           @click="drawer = !drawer"
           round
           dense
           icon="menu"
-        />
+        />-->
+        <q-btn v-if="auth" flat round dense icon="menu" @click="show(true)" />
 
         <q-toolbar-title>Электронный Помощник ХТК</q-toolbar-title>
         <q-btn
@@ -49,12 +50,21 @@
     >
       <q-scroll-area class="fit">
         <q-list padding>
-          <q-item clickable v-ripple v-on:click="documents()">
+          <q-item clickable v-ripple v-on:click="profile()">
             <q-item-section avatar>
               <i class="fad fa-id-badge fa-2x"></i>
             </q-item-section>
             <q-item-section>
-              <q-item-label>Документооборот</q-item-label>
+              <q-item-label>Профиль</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-separator />
+          <q-item clickable v-ripple v-on:click="calendars()">
+            <q-item-section avatar>
+              <i class="far fa-calendar-alt fa-2x"></i>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Календари</q-item-label>
             </q-item-section>
           </q-item>
           <q-separator />
@@ -74,13 +84,15 @@ import { defineComponent, ref, computed } from '@vue/composition-api';
 import { StateInterface } from '../store/';
 import { Store } from 'vuex';
 
+import { BottomSheet } from 'quasar';
+
 let drawer = ref(false);
 let miniState = ref(true);
 
-function getAuth (store: Store<unknown>) {
+function getAuth(store: Store<unknown>) {
   const auth = computed(() => (<StateInterface>store.state).user.auth);
   return {
-      auth
+    auth
   };
 }
 
@@ -93,7 +105,45 @@ export default defineComponent({
       void store.dispatch('user/exit');
     }
 
-    return { drawer, miniState, ...getAuth(store), exit };
+    function calendars() {
+      void store.dispatch('calendar/getCalendars', context);
+    }
+
+    function show(grid: boolean) {
+      BottomSheet.create({
+        dark: true,
+        message: 'Меню',
+        grid,
+        actions: [
+          {
+            label: 'Профиль',
+            icon: 'fad fa-id-badge fa-color-white',
+            id: 0
+          },
+          {
+            label: 'Календари',
+            icon: 'far fa-calendar-alt fa-color-white',
+            id: 1
+          }
+        ]
+      })
+        .onOk((action: { id: number }) => {
+          if (action.id === 0) {
+          } else if (action.id === 1) {
+            void store.dispatch('calendar/getCalendars', context);
+          }
+        })
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        .onCancel(() => {})
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        .onDismiss(() => {});
+    }
+    return { drawer, miniState, ...getAuth(store), exit, calendars, show };
   }
 });
 </script>
+
+<style lang="sass">
+.fa-color-white
+  color: white !important
+</style>

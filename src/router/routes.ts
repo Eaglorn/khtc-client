@@ -9,7 +9,7 @@ const routes: RouteConfig[] = [
       { path: 'index', component: () => import('pages/IndexLayout.vue') },
       { path: 'login', component: () => import('pages/LoginLayout.vue') },
       // { path: 'profile', component: () => import('pages/ProfileLayout.vue') },
-      // { path: 'calendars', component: () => import('pages/CalendarsLayout.vue') },
+      { path: 'calendars', component: () => import('pages/CalendarsLayout.vue') },
       // { path: 'calendar', component: () => import('pages/CalendarLayout.vue') }
     ]
   },

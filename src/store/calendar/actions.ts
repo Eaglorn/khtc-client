@@ -53,12 +53,12 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
       });
   },
 
-  getCalendars(context, { app, login } : {app: SetupContext, login: string}) {
+  getCalendars(context, app : SetupContext) {
     Loading.show();
     axios({
         method: 'post',
         url: 'http://46.8.146.12:4000/api/user/calendars',
-        data: { login: login },
+        data: { login: context.rootState.user.login },
         timeout: 5000,
         responseType: 'json'
       })
@@ -75,7 +75,7 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
       });
   },
 
-  deleteCalendar(context, {id } : {id: number}) {
+  deleteCalendar(context, id: number) {
     Loading.show();
     axios({
         method: 'post',
