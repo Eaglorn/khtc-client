@@ -20,7 +20,7 @@
           class="q-ml-md"
           v-if="auth"
         >
-          <q-badge color="red" floating>{{ peoples }}</q-badge>
+          <!--<q-badge color="red" floating>{{ peoples }}</q-badge>-->
         </q-btn>
         <span>&nbsp;&nbsp;&nbsp;</span>
         <q-btn push v-if="!auth" color="secondary" label="Войти" to="/login" />
@@ -71,27 +71,29 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from '@vue/composition-api';
 
-import { UserStateInterface } from '../store/user/state';
+import { StateInterface } from '../store/';
+import { Store } from 'vuex';
 
 let drawer = ref(false);
 let miniState = ref(true);
+
+function getAuth (store: Store<unknown>) {
+  const auth = computed(() => (<StateInterface>store.state).user.auth);
+  return {
+      auth
+  };
+}
 
 export default defineComponent({
   name: 'MyLayout',
   setup(props, context) {
     const store = context.root.$store;
 
-    console.log(store.getters);
-
-    const auth = computed(() => {
-      (<UserStateInterface> store.state).auth;
-    });
-
     function exit() {
       void store.dispatch('user/exit');
     }
 
-    return { drawer, miniState, auth, exit };
+    return { drawer, miniState, ...getAuth(store), exit };
   }
 });
 </script>

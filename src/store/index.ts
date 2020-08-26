@@ -4,10 +4,10 @@ import Vuex from 'vuex';
 import user from './user';
 import { UserStateInterface } from './user/state';
 
-import calendar from './user';
+import calendar from './calendar';
 import { CalendarStateInterface } from './calendar/state';
 
-import event from './user';
+import event from './event';
 import { EventStateInterface } from './event/state';
 
 /*
