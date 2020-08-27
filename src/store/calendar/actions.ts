@@ -23,12 +23,12 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
     this.commit('updateCalendarText', value);
   },
 
-  getCalendar(context, { app, id }: { app: SetupContext, id : number }) {
+  getCalendar(context, value: { app: SetupContext, id : number }) {
     Loading.show();
       axios({
         method: 'post',
         url: 'http://46.8.146.12:4000/api/user/calendar',
-        data: { id: id },
+        data: { id: value.id },
         timeout: 5000,
         responseType: 'json'
       })
@@ -37,13 +37,14 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
         for (const event of (<{dates: [{ date:string }]}> response.data).dates) {
           items.push(event.date);
         }
+        response.data = (<{calendar: CalendarInterface}> response.data);
         this.commit('updateCalendar', (<{calendar: CalendarInterface}> response.data).calendar);
         this.commit('updateCalendarTitle', (<{calendar: CalendarInterface}> response.data).calendar.title);
         this.commit('updateCalendarText', (<{calendar: CalendarInterface}> response.data).calendar.text);
         void this.dispatch('event/updateDates', items);
         void this.dispatch('event/updateEvents', (<{events: EventInterface}>response.data).events);
-        if (app.root.$route.path !== '/calendar') {
-          void app.root.$router.push('/calendar');
+        if (value.app.root.$route.path !== '/calendar') {
+          void value.app.root.$router.push('/calendar');
         }
         Loading.hide();
       })
@@ -99,15 +100,15 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
       });
   },
 
-  editCalendar(context, { id, title, text } : {id: number, title: string, text: string}) {
+  editCalendar(context, value : {id: number, title: string, text: string}) {
     Loading.show();
     axios({
         method: 'post',
         url: 'http://46.8.146.12:4000/api/user/calendar/edit',
         data: {
-          id: id,
-          title: title,
-          text: text
+          id: value.id,
+          title: value.title,
+          text: value.text
         },
         timeout: 5000,
         responseType: 'json'
@@ -115,9 +116,9 @@ const actions: ActionTree<CalendarStateInterface, StateInterface> = {
       .then(() => {
         const items = context.state.calendars.slice();
         items.forEach(function(item) {
-          if (item.id === id) {
-            item.title = title;
-            item.text = text;
+          if (item.id === value.id) {
+            item.title = value.title;
+            item.text = value.text;
           }
         });
         context.commit('updateCalendars', items);

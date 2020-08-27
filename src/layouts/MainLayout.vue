@@ -118,25 +118,19 @@ export default defineComponent({
           {
             label: 'Профиль',
             icon: 'fad fa-id-badge fa-color-white',
-            id: 0
           },
           {
             label: 'Календари',
             icon: 'far fa-calendar-alt fa-color-white',
-            id: 1
           }
         ]
       })
-        .onOk((action: { id: number }) => {
-          if (action.id === 0) {
-          } else if (action.id === 1) {
+        .onOk((action: { label: string }) => {
+          if (action.label === 'Профиль') {
+          } else if (action.label === 'Календари') {
             void store.dispatch('calendar/getCalendars', context);
           }
         })
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        .onCancel(() => {})
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        .onDismiss(() => {});
     }
     return { drawer, miniState, ...getAuth(store), exit, calendars, show };
   }

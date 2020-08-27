@@ -10,7 +10,7 @@ const routes: RouteConfig[] = [
       { path: 'login', component: () => import('pages/LoginLayout.vue') },
       // { path: 'profile', component: () => import('pages/ProfileLayout.vue') },
       { path: 'calendars', component: () => import('pages/CalendarsLayout.vue') },
-      // { path: 'calendar', component: () => import('pages/CalendarLayout.vue') }
+      { path: 'calendar', component: () => import('pages/CalendarLayout.vue') }
     ]
   },
   { path: '*', component: () => import('pages/Error404Layout.vue') }
